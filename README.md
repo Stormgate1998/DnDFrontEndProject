@@ -40,22 +40,37 @@ Core Features:
 - [ ] Enable point buy for stat assignment.
 - [ ] (Major Stretch Goal) Optionally incorporate ChatGPT into character creation for background generation.
 
+### Requirements
+### Development and Infrastructure
 
-Use of Local Storage
-Client side state stores (e.g. redux or context)
-Toasts / global notifications or alerts
-Error handling (both on api requests and render errors)
-Network Calls
-read data
-write data
-websocket
-Developer type helping (typescript)
-10+ pages via a router
-CI/CD pipeline
-https support
-Live production environment
-Automated testing and linting in the pipeline (abort build if fails)
-3+ generic form input components
-4+ generic layout components
-authentication and user account support
-admin pages and public pages
+- [ ] Implement Local Storage for client-side data persistence.
+- [ ] Set up client-side state management using Redux or context.
+- [ ] Integrate toasts/global notifications or alerts for user feedback.
+- [ ] Implement comprehensive error handling for API requests and render errors.
+- [ ] Develop and manage network calls for reading and writing data.
+- [ ] Implement WebSocket functionality for real-time updates.
+- [ ] Provide developer assistance with TypeScript.
+- [ ] Design and implement a router for navigation with 10+ pages.
+- [ ] Set up a CI/CD pipeline for automated testing and deployment.
+- [ ] Enable HTTPS support for secure communication.
+- [ ] Deploy and maintain a live production environment.
+
+### Testing and Quality Assurance
+
+- [ ] Implement automated testing in the CI/CD pipeline.
+- [ ] Set up linting in the pipeline and abort the build if it fails.
+
+### UI Components
+
+- [ ] Develop 3+ generic form input components.
+- [ ] Create 4+ generic layout components.
+
+### User Management
+
+- [ ] Implement authentication functionality.
+- [ ] Support user accounts.
+
+### Page Design and Structure
+
+- [ ] Design and implement admin pages.
+- [ ] Develop public pages.
