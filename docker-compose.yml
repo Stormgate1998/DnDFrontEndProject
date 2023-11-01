@@ -15,7 +15,7 @@ services:
       - PGID=1000
       - TZ=America/Denver
       - URL=dndbarlowproject.duckdns.org
-      - DUCKDNSTOKEN = ${secrets.DUCKDNSTOKEN}
+      - DUCKDNSTOKEN = ${secrets.DUCKDNSTOKEN}$
       - VALIDATION=duckdns
       - STAGING=true
     volumes:
