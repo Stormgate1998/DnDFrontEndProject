@@ -10,14 +10,12 @@ services:
     container_name: swag
     cap_add:
       - NET_ADMIN
-    env_file:
-    - .env
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=America/Denver
       - URL=dndbarlowproject.duckdns.org
-      - DUCKDNSTOKEN = ${DUCKDNSTOKEN}
+      - DUCKDNSTOKEN = ${secrets.DUCKDNSTOKEN}
       - VALIDATION=duckdns
       - STAGING=true
     volumes:
