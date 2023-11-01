@@ -1,0 +1,14 @@
+name: Build Dnd App
+on: [push, workflow_dispatch]
+jobs:
+  deploy-application:
+    runs-on: [self-hosted]
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: redeploy application
+        run: |
+          docker compose pull
+          docker compose build
+          docker compose up -d
