@@ -1,8 +1,8 @@
 FROM node:20 as build
 
-WORKDIR /app
-COPY dndfrontend/package*.json ./
+WORKDIR /app/dndfrontend
+COPY package*.json ./
 RUN npm install
-COPY dndfrontend/. .
+COPY . .
 
-CMD ["cd dndfrontend", "npx", "eslint", "src", "--max-warnings=0"]
+CMD ["npx", "eslint", "src", "--max-warnings=0"]
