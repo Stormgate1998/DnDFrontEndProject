@@ -5,4 +5,4 @@ COPY dndfrontend/package*.json ./
 RUN npm install
 COPY dndfrontend/. .
 
-CMD ["npx", "eslint", "src", "--max-warnings=0"]
+CMD ["cd dndfrontend", "npx", "eslint", "src", "--max-warnings=0"]
