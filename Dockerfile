@@ -1,9 +1,9 @@
 FROM node:20 as build
 
 WORKDIR /app
-COPY package*.json ./
+COPY dndfrontend/package*.json ./
 RUN npm install
-COPY . .
+COPY dndfrontend/. .
 RUN npm run build
 
 FROM nginx:alpine
