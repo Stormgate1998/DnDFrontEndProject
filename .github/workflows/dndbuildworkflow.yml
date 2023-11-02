@@ -9,6 +9,8 @@ jobs:
 
       - name: redeploy application
         run: |
+          docker build -t josh_eslint -f eslint.Dockerfile .
+          docker run -i --rm josh_eslint
           docker compose pull
           docker compose build
           docker compose up -d
