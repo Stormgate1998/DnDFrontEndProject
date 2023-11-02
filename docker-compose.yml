@@ -23,5 +23,5 @@ services:
       - /home/josh/data/swag:/config
       - ./swag-default.conf:/config/nginx/site-confs/default.conf
     ports:
-    - 0.0.0.0:2001:80
+    - 0.0.0.0:2001:443
     restart: unless-stopped
