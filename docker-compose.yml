@@ -25,3 +25,10 @@ services:
     ports:
     - 0.0.0.0:2001:443
     restart: unless-stopped
+
+  storage-api:
+    image: jalapenojosh/storage-api-stormgate1998:latest
+    container_name: josh-storage-api
+    volumes:
+      - /home/josh/data/apiStorage:/app/storage
+    restart: unless-stopped
