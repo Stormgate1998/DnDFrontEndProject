@@ -1,4 +1,4 @@
- import React, { useState } from 'react';
+ import React from 'react';
 import './App.css';
 import {
   createBrowserRouter,
@@ -6,7 +6,6 @@ import {
 } from "react-router-dom"
 import { CharacterMaker } from './pages/CharacterMaker';
 import { CharacterViewer } from './pages/CharacterViewer';
-import Navbar from './components/NavBar';
 
 const router = createBrowserRouter([
   {
