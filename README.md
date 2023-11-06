@@ -2,12 +2,14 @@
 Advanced Front End final project
 Core Features:
 ### Nov 4
-- [ ] Live production environment (live production environment)
-- [ ] Automated linting in pipeline that aborts if it fails (auto linting)
+- [x] Live production environment (live production environment)
+- [x] Automated linting in pipeline that aborts if it fails (auto linting)
 - [ ] Create character sheet with race, class, stats, name, background, etc. (Network calls write data, local storage, page count)
 - [ ] Implement health editing functionality in the character sheet. (Local storage, read/write data)
 
 ### Nov 11
+- [ ] Create character sheet with race, class, stats, name, background, etc. (Network calls write data, local storage, page count)
+- [ ] Implement health editing functionality in the character sheet. (Local storage, read/write data)
 - [ ] Implement Dice Roller on pages where relevant (component)
 - [ ] Allow characters to level up with automatic adjustments. (network calls, local storage)
 - [ ] Enable GM registration for creating empty parties. (network calls)
