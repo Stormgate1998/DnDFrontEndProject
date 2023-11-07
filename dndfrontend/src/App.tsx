@@ -6,6 +6,7 @@ import {
 } from "react-router-dom"
 import { CharacterMaker } from './pages/CharacterMaker';
 import { CharacterViewer } from './pages/CharacterViewer';
+import { Character } from './objects/Character';
 
 const router = createBrowserRouter([
   {
