@@ -4,6 +4,7 @@ import Navbar from "../components/NavBar";
 import React, { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
 import InputBox from "../components/inputBox";
+import RandomInputBox from "../components/RandomInputBox";
 
 export const CharacterMaker = () => {
   const [character, setCharacter] = useState<Character>({
@@ -143,41 +144,47 @@ export const CharacterMaker = () => {
           value={character.Initiative}
           onChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Strength"
-          type="number"
-          value={character.Strength}
-          onChange={handleChange}
+          boxValue={character.Strength}
+          onBoxChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Dexterity"
-          type="number"
-          value={character.Dexterity}
-          onChange={handleChange}
+          boxValue={character.Dexterity}
+          onBoxChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Constitution"
-          type="number"
-          value={character.Constitution}
-          onChange={handleChange}
+          boxValue={character.Constitution}
+          onBoxChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Intelligence"
-          type="number"
-          value={character.Intelligence}
-          onChange={handleChange}
+          boxValue={character.Intelligence}
+          onBoxChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Wisdom"
-          type="number"
-          value={character.Wisdom}
-          onChange={handleChange}
+          boxValue={character.Wisdom}
+          onBoxChange={handleChange}
         />
-        <InputBox
+        <RandomInputBox
+          maxNumber={6}
+          numberOfRolls={4}
           name="Charisma"
-          type="number"
-          value={character.Charisma}
-          onChange={handleChange}
+          boxValue={character.Charisma}
+          onBoxChange={handleChange}
         />
         <InputBox
           name="Max Hitpoints"
@@ -185,6 +192,7 @@ export const CharacterMaker = () => {
           value={character.MaxHitpoints}
           onChange={handleChange}
         />
+
         <InputBox
           name="Hit Dice"
           type="text"
