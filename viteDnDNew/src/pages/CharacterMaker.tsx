@@ -3,8 +3,8 @@ import Navbar from "../components/NavBar";
 
 import React, { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
-import InputBox from "../components/inputBox";
 import RandomInputBox from "../components/RandomInputBox";
+import InputBox from "../components/InputBox";
 
 export const CharacterMaker = () => {
   const [character, setCharacter] = useState<Character>({
@@ -212,7 +212,7 @@ export const CharacterMaker = () => {
     }
   /> */}
 
-        <button onClick={handleSave}>Save Character</button>
+        <button className="btn btn-primary"onClick={handleSave}>Save Character</button>
       </div>
     </>
   );

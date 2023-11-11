@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from "react";
-import InputBox from "./inputBox";
+import InputBox from "./InputBox";
 
 interface RandomRollerProps {
   maxNumber: number;
@@ -34,7 +34,7 @@ const RandomInputBox: React.FC<RandomRollerProps> = ({
         value={boxValue}
         onChange={onBoxChange}
       />
-      <button onClick={handleRoll}>Roll</button>
+      <button className="btn btn-primary" onClick={handleRoll}>Roll</button>
       {rolls.length > 0 && <p>{rolls.map((roll) => roll).join(" ")}</p>}
     </div>
   );
