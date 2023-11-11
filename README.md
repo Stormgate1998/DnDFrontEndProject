@@ -1,13 +1,17 @@
-# DnDFrontEndProject
+# viteDnDNewProject
+
 Advanced Front End final project
 Core Features:
+
 ### Nov 4
+
 - [x] Live production environment (live production environment)
 - [x] Automated linting in pipeline that aborts if it fails (auto linting)
 - [ ] Create character sheet with race, class, stats, name, background, etc. (Network calls write data, local storage, page count)
 - [ ] Implement health editing functionality in the character sheet. (Local storage, read/write data)
 
 ### Nov 11
+
 - [ ] Create character sheet with race, class, stats, name, background, etc. (Network calls write data, local storage, page count)
 - [ ] Implement health editing functionality in the character sheet. (Local storage, read/write data)
 - [ ] Implement Dice Roller on pages where relevant (component)
@@ -17,6 +21,7 @@ Core Features:
 - [ ] Enable party members to view a summary of characters (name, race, class, health).
 
 ### Nov 18
+
 - [ ] Users can only view their characters/parties (authentication)
 - [ ] Implement GM's acceptance/rejection of users or characters. (websockets)
 - [ ] Implement dynamic health updates of party members through websockets. (websockets)
@@ -26,9 +31,11 @@ Core Features:
 - [ ] Automated testing (auto testing)
 
 ### Core Features Complete
-***Once the above are done, core features will be complete 🎉🥳🎊🎈***
+
+**_Once the above are done, core features will be complete 🎉🥳🎊🎈_**
 
 ### Nov 25
+
 - [ ] Register spells for spellcasting characters with levels, components, and descriptions.
 - [ ] Implement inventory management, including racial or background items.
 - [ ] Include feats for character customization.
@@ -36,24 +43,27 @@ Core Features:
 - [ ] Create a character editor for changes like age, background, name, etc.
 
 ### Dec 2
+
 - [ ] Add tooltips for clarity and explanation.
 - [ ] Add a chat functionality for private messages between GM and users.
 - [ ] Implement note-taking: GM's private notes and party-visible notes.
 - [ ] Include additional party information (spell slots, status conditions, etc).
 
 ### Dec 9
+
 - [ ] Create a 'Character Creation' page for monsters to be added to campaigns.
 - [ ] Allow GM to toggle visibility of monsters' health.
 - [ ] Enable point buy for stat assignment.
 - [ ] (Major Stretch Goal) Optionally incorporate ChatGPT into character creation for background generation.
 
 ### Stretch Goals
+
 - [ ] Allow multiclass characters.
 - [ ] Include default monsters from the monster manual in party visibility.
 - [ ] Restrict party screen availability to GM selection (Session establishment).
 
-
 ### Requirements
+
 ### Development and Infrastructure
 
 - [ ] Implement Local Storage for client-side data persistence.

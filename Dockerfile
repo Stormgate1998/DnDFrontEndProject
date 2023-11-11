@@ -1,9 +1,9 @@
 FROM node:20 as build
 
 WORKDIR /app
-COPY dndfrontend/package*.json ./
+COPY viteDnDNew/package*.json ./
 RUN npm install
-COPY dndfrontend/. .
+COPY viteDnDNew/. .
 RUN npm run build
 
 FROM nginx:alpine
