@@ -13,6 +13,24 @@ export interface Character {
   MaxHitpoints: number;
   CurrentHitpoints: number;
   TemporaryHitpoints: number;
+  Acrobatics: number;
+  Animal_Handling: number;
+  Arcana: number;
+  Athletics: number;
+  Deception: number;
+  History: number;
+  Insight: number;
+  Intimidation: number;
+  Investigation: number;
+  Medicine: number;
+  Nature: number;
+  Perception: number;
+  Performance: number;
+  Persuasion: number;
+  Religion: number;
+  Sleight_of_hand: number; 
+  Stealth: number;
+  Survival: number;
   HitDice: string;
   DeathSaves: {
     successes: number;
@@ -26,9 +44,6 @@ export interface Character {
     level: number;
   };
   Race: string; // Replace with actual Race type if available
-  SkillModifiers: {
-    [skill: string]: number;
-  };
   Speed: number;
   ArmorClass: number;
   Initiative: number;

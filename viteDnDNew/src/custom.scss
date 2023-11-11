@@ -1,0 +1,200 @@
+$primary: #1450d1;
+$secondary: #00b014;
+$success: #880099;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+.animated-fade-in {
+    opacity: 0;
+    animation: fadeIn 3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.button-hover-animation {
+    transition: all .5s ease-in-out;
+}
+
+.button-hover-animation:hover {
+    /* Scale the button by 110% on hover */
+    background-color: $secondary;
+    /* Change the background color on hover */
+    /* Change the text color on hover */
+}
+
+.logo {
+    height: 6em;
+    padding: 1.5em;
+    will-change: filter;
+    transition: filter 300ms;
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+:root {
+    --toast-ghost-hue: 150;
+    --toast-magic-hue: 20;
+    --toast-comment-hue: 255;
+    --toast-padding: 1.5em;
+    --toast-margin: 0.5em;
+    --toast-bg-color-fallback: hsl(var(--secondary-hue) 15% 100%);
+    --toast-text-color-fallback: hsl(var(--secondary-hue) 10% 25%);
+    --toast-opacity: 0.99;
+    --toast-content-gap: 1em;
+}
+
+.toast {
+    background-color: var(--toast-bg-color-fallback);
+    padding: var(--toast-padding);
+    box-shadow: 0 1px 3px rgba(var(--secondary-hue), 0.1), 0 1px 2px rgba(var(--secondary-hue), 0.05);
+    border-radius: 0.5rem;
+    position: relative;
+    color: var(--toast-text-color-fallback);
+    opacity: var(--toast-opacity);
+    margin-top: var(--toast-margin);
+}
+
+.toast:hover {
+    opacity: 1;
+}
+
+.toast-message {
+    display: flex;
+    gap: var(--toast-content-gap);
+    align-items: top;
+}
+
+.toast-close-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0;
+    line-height: 1;
+    height: 1rem;
+    width: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+}
+
+.toast--ghost {
+    color: white;
+}
+
+.toast--ghost .icon--thumb {
+    color: greenyellow;
+}
+
+.toast--magic {
+    color: white;
+}
+
+.toast--magic .icon--thumb {
+    color: blueviolet;
+}
+
+.toast--comment {
+    color: white;
+}
+
+.toast--comment .icon--thumb {
+    color: blue;
+}
+
+.icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
+.icon--lg {
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.purple-icon {
+    fill: purple;
+}
+
+.green-icon {
+    fill: green;
+}
+
+.red-icon {
+    fill: red;
+}
+
+/* Add these styles to your existing stylesheet or create a new one */
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-container {
+    flex-direction: column;
+    /* Navbar at the top by default */
+    display: flex;
+}
+
+.app-content {
+    flex-grow: 1;
+}
+
+/* Media query for mobile */
+@media (max-width: 767px) {
+    .app-container {
+        flex-direction: column-reverse;
+        /* Navbar at the bottom on mobile */
+    }
+
+    .nav-item {
+        margin-bottom: 10px;
+        /* Adjust spacing between items */
+    }
+
+    .icon,
+    h3 {
+        display: block;
+        margin: 5px 0;
+        /* Adjust spacing between icon and text */
+    }
+}
+
+@media (min-width: 768px) {
+    .nav-item {
+        display: inline-block;
+        margin-right: 20px;
+        /* Adjust spacing between items */
+    }
+
+    .icon {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    h3 {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 10px;
+        /* Adjust spacing between icon and text */
+    }
+}
+
+/* Mobile layout */
+@media (max-width: 767px) {}
