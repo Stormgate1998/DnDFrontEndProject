@@ -27,15 +27,27 @@ const RandomInputBox: React.FC<RandomRollerProps> = ({
   };
 
   return (
-    <div>
-      <InputBox
-        name={name}
-        type="number"
-        value={boxValue}
-        onChange={onBoxChange}
-      />
-      <button className="btn btn-primary" onClick={handleRoll}>Roll</button>
-      {rolls.length > 0 && <p>{rolls.map((roll) => roll).join(" ")}</p>}
+    <div className="container-sm">
+      <div className="border my-3 rounded-3">
+        <div className="row">
+          <div className="col-md-4">
+            <InputBox
+              name={name}
+              type="number"
+              value={boxValue}
+              onChange={onBoxChange}
+            />
+          </div>
+          <div className="col-md-4">
+            <button className="btn btn-primary" onClick={handleRoll}>
+              Roll
+            </button>
+          </div>
+          <div className="col-md-4">
+            {rolls.length > 0 && <p>{rolls.map((roll) => roll).join(" ")}</p>}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

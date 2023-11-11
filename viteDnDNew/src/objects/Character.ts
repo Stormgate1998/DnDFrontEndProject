@@ -1,9 +1,4 @@
 export interface Character {
-    id: string;
-    playerid: string;
-    partyid: string;
-    
-}export interface Character {
   Strength: number;
   Dexterity: number;
   Constitution: number;
@@ -48,4 +43,7 @@ export interface Character {
   ArmorClass: number;
   Initiative: number;
   Traits: string[];
+  PlayerId: string;
+  Id: string;
+  PartyId: string;
 }

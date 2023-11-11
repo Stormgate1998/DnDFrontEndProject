@@ -14,15 +14,19 @@ const InputBox: React.FC<CustomInputProps> = ({
   onChange,
 }) => {
   return (
-    <div>
-      <label className="form-label">{name}:</label>
-      <input
-        className="form-control"
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-      />
+    <div className="row my-3">
+      <div className="col-md-4">
+        <label className="form-label">{name}:</label>
+      </div>
+      <div className="col-md-4">
+        <input
+          className="form-control"
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+        />
+      </div>
     </div>
   );
 };

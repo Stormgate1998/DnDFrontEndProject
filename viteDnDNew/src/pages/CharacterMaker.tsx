@@ -5,9 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
 import RandomInputBox from "../components/RandomInputBox";
 import InputBox from "../components/InputBox";
+import { useAddCharacters } from "../hooks/characterHooks";
 
 export const CharacterMaker = () => {
+  const addCharacter = useAddCharacters();
   const [character, setCharacter] = useState<Character>({
+    PlayerId: "testId",
     Strength: 0,
     Dexterity: 0,
     Constitution: 0,
@@ -28,9 +31,8 @@ export const CharacterMaker = () => {
     ArmorClass: 0,
     Initiative: 0,
     Traits: [],
-    id: "",
-    playerid: "",
-    partyid: "",
+    Id: Date.now.toString(),
+    PartyId: "",
     Acrobatics: 0,
     Animal_Handling: 0,
     Arcana: 0,
@@ -59,13 +61,14 @@ export const CharacterMaker = () => {
     setCharacter((prevCharacter) => ({ ...prevCharacter, [name]: value }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     // Save character to local storage
     setCharacter((prevCharacter) => ({
       ...prevCharacter,
       CurrentHitpoints: prevCharacter.MaxHitpoints,
     }));
     localStorage.setItem("character", JSON.stringify(character));
+    await addCharacter.mutateAsync(character);
     // Call the parent onSave function
   };
 
@@ -87,7 +90,6 @@ export const CharacterMaker = () => {
     <>
       <Navbar />
       <div className="container">
-        <div className="btn btn-primary">test</div>
         <InputBox
           name="Name"
           type="text"
@@ -144,6 +146,19 @@ export const CharacterMaker = () => {
           value={character.Initiative}
           onChange={handleChange}
         />
+        <InputBox
+          name="Max Hitpoints"
+          type="number"
+          value={character.MaxHitpoints}
+          onChange={handleChange}
+        />
+
+        <InputBox
+          name="Hit Dice"
+          type="text"
+          value={character.HitDice}
+          onChange={handleChange}
+        />
         <RandomInputBox
           maxNumber={6}
           numberOfRolls={4}
@@ -186,19 +201,7 @@ export const CharacterMaker = () => {
           boxValue={character.Charisma}
           onBoxChange={handleChange}
         />
-        <InputBox
-          name="Max Hitpoints"
-          type="number"
-          value={character.MaxHitpoints}
-          onChange={handleChange}
-        />
 
-        <InputBox
-          name="Hit Dice"
-          type="text"
-          value={character.HitDice}
-          onChange={handleChange}
-        />
         {/* 
   <label>Traits:</label>
   <input
@@ -212,7 +215,9 @@ export const CharacterMaker = () => {
     }
   /> */}
 
-        <button className="btn btn-primary"onClick={handleSave}>Save Character</button>
+        <button className="btn btn-primary" onClick={handleSave}>
+          Save Character
+        </button>
       </div>
     </>
   );

@@ -1,6 +1,9 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { CharacterMaker } from "./pages/CharacterMaker";
 import { CharacterViewer } from "./pages/CharacterViewer";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserCharacterList } from "./pages/UserCharacterList";
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -9,14 +12,20 @@ const router = createBrowserRouter([
   },
   {
     path: "/character",
-    element: <CharacterViewer />,
+    element: <UserCharacterList />,
+  },
+  {
+    path: "/character/:characterId",
+    element: <CharacterViewer/>,
   },
 ]);
 export const App = () => {
   return (
-    <div className="App">
-      {/* <Navbar/> */}
-      <RouterProvider router={router} />
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className="App">
+        {/* <Navbar/> */}
+        <RouterProvider router={router} />
+      </div>
+    </QueryClientProvider>
   );
 };
