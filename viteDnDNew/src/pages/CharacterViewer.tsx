@@ -22,7 +22,6 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
     <div className="App">
       <Navbar />
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         {character ? (
           <div>
   <h1>{character.Name}</h1>

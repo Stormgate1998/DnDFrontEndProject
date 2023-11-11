@@ -3,6 +3,7 @@ import Navbar from "../components/NavBar";
 
 import React, { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
+import InputBox from "../components/inputBox";
 
 export const CharacterMaker = () => {
   const [character, setCharacter] = useState<Character>({
@@ -45,8 +46,8 @@ export const CharacterMaker = () => {
     Persuasion: 0,
     Religion: 0,
     Sleight_of_hand: 0,
-    Stealth:0,
-    Survival:0,
+    Stealth: 0,
+    Survival: 0,
   });
   const [classNameChoice, setClassNameChoice] = useState("");
   const [classLevelChoice, setClassLevelChoice] = useState(0);
@@ -59,6 +60,10 @@ export const CharacterMaker = () => {
 
   const handleSave = () => {
     // Save character to local storage
+    setCharacter((prevCharacter) => ({
+      ...prevCharacter,
+      CurrentHitpoints: prevCharacter.MaxHitpoints,
+    }));
     localStorage.setItem("character", JSON.stringify(character));
     // Call the parent onSave function
   };
@@ -82,152 +87,107 @@ export const CharacterMaker = () => {
       <Navbar />
       <div className="container">
         <div className="btn btn-primary">test</div>
-        <label>Name:</label>
-        <input
-          type="text"
+        <InputBox
           name="Name"
+          type="text"
           value={character.Name}
           onChange={handleChange}
         />
-
-        <label>Class:</label>
-        <input
-          type="text"
+        <InputBox
           name="Class"
+          type="text"
           value={character.Class.class}
           onChange={(e) => setClassNameChoice(e.target.value)}
         />
-
-        <label>Level:</label>
-        <input
-          type="number"
+        <InputBox
           name="Level"
+          type="number"
           value={character.Class.level}
           onChange={(e) => setClassLevelChoice(parseInt(e.target.value))}
         />
-        <label>Background:</label>
-        <input
-          type="text"
+        <InputBox
           name="Background"
+          type="text"
           value={character.Background}
           onChange={handleChange}
         />
-
-        <label>Race:</label>
-        <input
-          type="text"
+        <InputBox
           name="Race"
+          type="text"
           value={character.Race}
           onChange={handleChange}
         />
-
-        <label>Alignment:</label>
-        <input
-          type="text"
+        <InputBox
           name="Alignment"
+          type="text"
           value={character.Alignment}
           onChange={handleChange}
         />
 
-        <label>Speed:</label>
-        <input
-          type="number"
+        <InputBox
           name="Speed"
+          type="number"
           value={character.Speed}
           onChange={handleChange}
         />
-
-        <label>Armor Class:</label>
-        <input
+        <InputBox
+          name="Armor Class"
           type="number"
-          name="ArmorClass"
           value={character.ArmorClass}
           onChange={handleChange}
         />
 
-        <label>Initiative:</label>
-        <input
-          type="number"
+        <InputBox
           name="Initiative"
+          type="number"
           value={character.Initiative}
           onChange={handleChange}
         />
-        <label>Strength:</label>
-        <input
-          type="number"
+        <InputBox
           name="Strength"
+          type="number"
           value={character.Strength}
           onChange={handleChange}
         />
-
-        <label>Dexterity:</label>
-        <input
-          type="number"
+        <InputBox
           name="Dexterity"
+          type="number"
           value={character.Dexterity}
           onChange={handleChange}
         />
-
-        <label>Constitution:</label>
-        <input
-          type="number"
+        <InputBox
           name="Constitution"
+          type="number"
           value={character.Constitution}
           onChange={handleChange}
         />
-
-        <label>Intelligence:</label>
-        <input
-          type="number"
+        <InputBox
           name="Intelligence"
+          type="number"
           value={character.Intelligence}
           onChange={handleChange}
         />
-
-        <label>Wisdom:</label>
-        <input
-          type="number"
+        <InputBox
           name="Wisdom"
+          type="number"
           value={character.Wisdom}
           onChange={handleChange}
         />
-
-        <label>Charisma:</label>
-        <input
-          type="number"
+        <InputBox
           name="Charisma"
+          type="number"
           value={character.Charisma}
           onChange={handleChange}
         />
-
-        <label>Max Hitpoints:</label>
-        <input
+        <InputBox
+          name="Max Hitpoints"
           type="number"
-          name="MaxHitpoints"
           value={character.MaxHitpoints}
           onChange={handleChange}
         />
-
-        <label>Current Hitpoints:</label>
-        <input
-          type="number"
-          name="CurrentHitpoints"
-          value={character.CurrentHitpoints}
-          onChange={handleChange}
-        />
-
-        <label>Temporary Hitpoints:</label>
-        <input
-          type="number"
-          name="TemporaryHitpoints"
-          value={character.TemporaryHitpoints}
-          onChange={handleChange}
-        />
-
-        <label>Hit Dice:</label>
-        <input
+        <InputBox
+          name="Hit Dice"
           type="text"
-          name="HitDice"
           value={character.HitDice}
           onChange={handleChange}
         />
