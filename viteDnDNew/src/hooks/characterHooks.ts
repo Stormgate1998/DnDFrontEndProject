@@ -29,7 +29,7 @@ export const useAddCharacters = () => {
             return await CharacterService.addCharacter(newCharacter)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["characters"])
+            queryClient.invalidateQueries({queryKey: ["characters"]})
         }
     })
 }
@@ -40,7 +40,7 @@ export const useEditCharacters = (playerId: string) => {
             return await CharacterService.updateCharacter(newCharacter)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["characters", playerId])
+            queryClient.invalidateQueries({queryKey: ["characters", playerId]})
         }
     })
 }
@@ -51,7 +51,7 @@ export const useDeleteCharacters = () => {
             return await CharacterService.deleteCharacter(newCharacter)
         },
         onSuccess: () => {
-            queryClient.invalidateQueries(["characters"])
+            queryClient.invalidateQueries({queryKey: ["characters"]})
         }
     })
 }

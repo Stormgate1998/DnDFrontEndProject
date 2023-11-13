@@ -133,8 +133,9 @@ export const CharacterMaker = () => {
           value={character.Speed}
           onChange={handleChange}
         />
+
         <InputBox
-          name="Armor Class"
+          name="Armor_Class"
           type="number"
           value={character.ArmorClass}
           onChange={handleChange}
@@ -147,14 +148,14 @@ export const CharacterMaker = () => {
           onChange={handleChange}
         />
         <InputBox
-          name="Max Hitpoints"
+          name="Max_Hitpoints"
           type="number"
           value={character.MaxHitpoints}
           onChange={handleChange}
         />
 
         <InputBox
-          name="Hit Dice"
+          name="Hit_Dice"
           type="text"
           value={character.HitDice}
           onChange={handleChange}
