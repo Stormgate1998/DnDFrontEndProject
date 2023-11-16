@@ -36,18 +36,16 @@ services:
   joshbarlowkeycloak:
     image: bitnami/keycloak:22
     container_name: joshbarlowkeycloak
-    ports:
-      - 2320:8080
     environment:
       - KEYCLOAK_DATABASE_PASSWORD=NoDefaults
       - KEYCLOAK_ADMIN_USER=user
       - KEYCLOAK_ADMIN_PASSWORD=bitnami
       - KEYCLOAK_DATABASE_HOST=joshkeycloakpostgresql
-    command:
-      - start-dev
-      - --proxy=edge
-      - --hostname-strict=false
-      - --hostname-strict-https=false
+    # command:
+    #   - start-dev
+    #   - --proxy=edge
+    #   - --hostname-strict=false
+    #   - --hostname-strict-https=false
     restart: unless-stopped
 
   joshkeycloakpostgresql:
@@ -61,6 +59,26 @@ services:
     volumes:
       - /home/josh/data/kcpostgres:/var/lib/postgresql/data
 
+    restart: unless-stopped
+
+    swag:
+    image: lscr.io/linuxserver/swag
+    container_name: barlowdndkeycloakswag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Denver
+      - URL=barlowtestkeycloak.duckdns.org
+      - DUCKDNSTOKEN = ${DUCKDNSTOKEN}
+      - VALIDATION=duckdns
+      - STAGING=false
+    volumes:
+      - /home/josh/data/keycloak/swag:/config
+      - ./swag-default.conf:/config/nginx/site-confs/default.conf
+    ports:
+    - 0.0.0.0:2320:443
     restart: unless-stopped
 
 networks:
