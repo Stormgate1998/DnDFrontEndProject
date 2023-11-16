@@ -71,7 +71,7 @@ services:
       - PGID=1000
       - TZ=America/Denver
       - URL=barlowtestkeycloak.duckdns.org
-      - DUCKDNSTOKEN = ${DUCKDNSTOKEN}
+      - DUCKDNSTOKEN=${DUCKDNSTOKEN}
       - VALIDATION=duckdns
       - STAGING=false
     volumes:

@@ -1,4 +1,6 @@
 name: Build Dnd App
+env:
+  DUCKDNSTOKEN: ${{ secrets.DUCKDNSTOKEN }}
 on: [push, workflow_dispatch]
 jobs:
   deploy-application:
