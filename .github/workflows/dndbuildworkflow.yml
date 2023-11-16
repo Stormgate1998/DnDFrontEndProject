@@ -15,4 +15,5 @@ jobs:
           docker run -i --rm josh_eslint
           docker compose pull
           docker compose build
+          docker compose down
           docker compose up -d
