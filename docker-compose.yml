@@ -44,7 +44,7 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=bitnami
       - KEYCLOAK_DATABASE_HOST=joshkeycloakpostgresql
     command:
-      - start-dev
+      - start
       - --proxy=edge
       - --hostname-strict=false
       - --hostname-strict-https=false
