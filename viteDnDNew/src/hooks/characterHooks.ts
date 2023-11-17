@@ -3,7 +3,7 @@ import { CharacterService } from './characterApiService';
 import toast from 'react-hot-toast';
 import { Character } from '../objects/Character';
 
-
+const notUsed = 4;
 export const queryClient = new QueryClient({
     queryCache: new QueryCache({
         onError: (error) =>{
