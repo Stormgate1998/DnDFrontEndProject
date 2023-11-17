@@ -8,7 +8,7 @@ services:
   
   swag:
     image: lscr.io/linuxserver/swag
-    container_name: barlowdndswag
+    container_name: joshdndswag
     cap_add:
       - NET_ADMIN
     environment:
@@ -28,7 +28,7 @@ services:
 
   storage-api:
     image: jalapenojosh/storage-api-stormgate1998:latest
-    container_name: dnd-storage-api
+    container_name: josh-dnd-storage-api
     volumes:
       - /home/josh/data/apiStorage:/app/storage
     restart: unless-stopped
@@ -65,7 +65,7 @@ services:
 
   keycloakswag:
     image: lscr.io/linuxserver/swag
-    container_name: barlowdndkeycloakswag
+    container_name: joshdndkeycloakswag
     cap_add:
       - NET_ADMIN
     environment:
