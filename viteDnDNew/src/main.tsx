@@ -7,9 +7,9 @@ import { AuthProvider } from "react-oidc-context";
 import { App } from "./App";
 
 const oidcConfig = {
-  authority: "<your authority>",
-  client_id: "<your client id>",
-  redirect_uri: "<your redirect uri>",
+  authority: "http://joshbarlowkeycloak:8080",
+  client_id: "DND User",
+  redirect_uri: "https://dndbarlowproject.duckdns.org:2320/",
   // ...
 };
 
