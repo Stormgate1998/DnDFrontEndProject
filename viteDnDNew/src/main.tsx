@@ -7,10 +7,9 @@ import { AuthProvider } from "react-oidc-context";
 import { App } from "./App";
 
 const oidcConfig = {
-  authority: "https://dndbarlowproject.duckdns.org:2320/", // replace with your Keycloak base URL
+  authority: "https://barlowtestkeycloak.duckdns.org:2320/auth",
   client_id: "DND User",
-  redirect_uri: "https://dndbarlowproject.duckdns.org:2001/", // replace with your redirect URI
-  // ...
+  redirect_uri: "https://barlowtestkeycloak.duckdns.org:2320/",
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
