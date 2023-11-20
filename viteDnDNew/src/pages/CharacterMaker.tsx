@@ -32,7 +32,7 @@ export const CharacterMaker = () => {
     ArmorClass: 0,
     Initiative: 0,
     Traits: [],
-    Id: Date.now.toString(),
+    Id: Date.now().toString(),
     PartyId: "",
     Acrobatics: 0,
     Animal_Handling: 0,

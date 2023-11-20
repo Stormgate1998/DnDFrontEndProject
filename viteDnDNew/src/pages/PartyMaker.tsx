@@ -9,7 +9,7 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
   const [name, setName] = useState("");
   const gmId = "testId"; // Hardcoded gmId
   const characterlist: string[] = []; // Empty characterlist
-  const id: string = Date.now.toString();
+  const id: string = Date.now().toString();
   const addParty = useAddPartyQuery();
 
   const handleSubmit = () => {
