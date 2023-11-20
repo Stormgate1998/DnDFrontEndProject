@@ -18,7 +18,7 @@ services:
       - URL=dndbarlowproject.duckdns.org
       - DUCKDNSTOKEN = ${DUCKDNSTOKEN}
       - VALIDATION=duckdns
-      - STAGING=true
+      - STAGING=false
     volumes:
       - /home/josh/data/swag:/config
       - ./swag-default.conf:/config/nginx/site-confs/default.conf
