@@ -102,11 +102,10 @@ export const CharacterService = {
   async addParty(party: Party) {
 
     try {
-      //const list: Party[] = await axios.get(baseURL + "parties");
-      // const newParties = list.length > 0
-      //     ? list.concat(party)
-      //     : [party];
-      const newParties = [party]
+      const list: Party[] = await axios.get(baseURL + "parties");
+      const newParties = list.length > 0
+          ? list.concat(party)
+          : [party];
       const response = await axios.post(baseURL+ "parties", newParties);
 
       return response
@@ -153,10 +152,10 @@ export const CharacterService = {
   partyList[partyIndex] = updatedParty;
 
   // Update the parties in the database
-  const putResponse = await axios.put(baseURL + "parties", partyList);
+  const postResponse = await axios.post(baseURL + "parties", partyList);
 
   // Handle the response as needed
-  console.log('Response from PUT:', putResponse.data);
+  console.log('Response from PUT:', postResponse.data);
 }
  catch (error) {
     console.error('Error updating Party:', error);
