@@ -32,7 +32,7 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
         {character ? (
           <div>
             <PartySelector characterId={character.Id} />
-            <h2>{character.Name}</h2>
+            <h2>Name: {character.Name}</h2>
             <p>Class: {character.Class.class}</p>
             <p>Level: {character.Class.level}</p>
             <p>Background: {character.Background}</p>
