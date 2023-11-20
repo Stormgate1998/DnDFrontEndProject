@@ -103,9 +103,11 @@ export const CharacterService = {
 
     try {
       const list: Party[] = await axios.get(baseURL + "parties");
+      console.log(list)
       const newParties = list.length > 0
           ? list.concat(party)
           : [party];
+      console.log(newParties)
       const response = await axios.post(baseURL+ "parties", newParties);
 
       return response
