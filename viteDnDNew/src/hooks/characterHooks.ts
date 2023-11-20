@@ -2,6 +2,7 @@ import { QueryCache, QueryClient, useMutation, useQuery} from '@tanstack/react-q
 import { CharacterService } from './characterApiService';
 import toast from 'react-hot-toast';
 import { Character } from '../objects/Character';
+import { Party } from '../objects/Party';
 
 
 export const queryClient = new QueryClient({
@@ -55,3 +56,36 @@ export const useDeleteCharacters = () => {
         }
     })
 }
+
+
+
+export const useAddPartyQuery = () => {
+    return useMutation({
+        mutationFn: async (newParty: Party) => {
+            return await CharacterService.addParty(newParty)
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ["parties"]})
+        }
+    })
+}
+
+export const useGetPartiesQuery = () => useQuery({
+  queryKey: ["parties"],
+  queryFn: async () => {
+   return await CharacterService.getParties();
+  },
+  refetchInterval: 30000,
+    
+});
+
+export const useUpdatePartyMutation = () => {
+  return useMutation({
+    mutationFn: async (updatedParty: Party) => {
+      return await CharacterService.updateParty(updatedParty);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["parties"] });
+    },
+  });
+};

@@ -4,6 +4,7 @@ import Navbar from "../components/NavBar";
 import { Character } from "../objects/Character";
 import { useGetCharactersQuery } from "../hooks/characterHooks";
 import { useParams } from "react-router-dom";
+import PartySelector from "./PartyAdder";
 
 interface ViewerProps {}
 
@@ -30,6 +31,7 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
       <header className="App-header">
         {character ? (
           <div>
+            <PartySelector characterId={character.Id} />
             <h1>{character.Name}</h1>
             <p>Class: {character.Class.class}</p>
             <p>Level: {character.Class.level}</p>

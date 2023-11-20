@@ -1,4 +1,6 @@
 export interface Party {
+    id: string;
     gmId: string;
-    playerlist: string[];
+    name: string;
+    characterlist: string[];
 }

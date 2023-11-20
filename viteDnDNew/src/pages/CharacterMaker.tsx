@@ -6,6 +6,7 @@ import { Character } from "../objects/Character";
 import RandomInputBox from "../components/RandomInputBox";
 import InputBox from "../components/InputBox";
 import { useAddCharacters } from "../hooks/characterHooks";
+import { PartyMaker } from "./PartyMaker";
 
 export const CharacterMaker = () => {
   const addCharacter = useAddCharacters();
@@ -90,6 +91,7 @@ export const CharacterMaker = () => {
     <>
       <Navbar />
       <div className="container">
+        <PartyMaker />
         <InputBox
           name="Name"
           type="text"

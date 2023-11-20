@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Character } from "../objects/Character";
+import { Party } from "../objects/Party";
 
 const baseURL = '/api/store?key=';
 
@@ -7,7 +8,6 @@ export const CharacterService = {
   async getCharacters(weaponId: string): Promise<Character[]> {
     try {
       const url = baseURL + weaponId;
-      console.log(url);
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
@@ -97,5 +97,57 @@ export const CharacterService = {
     const newList = existingCharacters.filter((c) => c.Id !== Character.Id);
     console.log(newList)
     this.addCharacters(newList);
+  },
+
+  async addParty(party: Party) {
+
+    try {
+      const list: Party[] = await axios.get(baseURL + "parties");
+      const newParties = list.length > 0
+          ? list.concat(party)
+          : [party];
+      const response = await axios.post(baseURL+ "parties", newParties);
+
+      // Handle the response as needed
+      console.log('Response from POST:', response.data);
+    } catch (error) {
+      console.error('Error adding Character:', error);
+      throw error;
+    }
+
+  },
+  async getParties(): Promise<Party[]>{
+      const url = baseURL + "parties";
+      const response = await axios.get(url);
+      return response.data;
+  },
+  async updateParty(updatedParty: Party) {
+  try {
+    // Get the list of parties
+    const partyList: Party[] = await axios.get(baseURL + "parties");
+
+    // Find the index of the party with the provided gmId
+    const partyIndex = partyList.findIndex(party => party.id === updatedParty.id);
+
+    if (partyIndex === -1) {
+      // Party with provided gmId not found
+      console.error('Party not found for id:', updatedParty.id);
+      return;
+    }
+
+    // Update the party at the found index with the new party
+    partyList[partyIndex] = updatedParty;
+
+    // Update the parties in the database
+    const response = await axios.put(baseURL + "parties", partyList);
+
+    // Handle the response as needed
+    console.log('Response from PUT:', response.data);
+  } catch (error) {
+    console.error('Error updating Party:', error);
+    throw error;
   }
+}
+
+
 };
