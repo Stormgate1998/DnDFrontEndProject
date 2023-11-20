@@ -64,7 +64,7 @@ export const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="App d-flex justify-content-between">
+      <div className="App">
         <button
           className="btn btn-primary"
           onClick={() => void auth.signinRedirect()}
