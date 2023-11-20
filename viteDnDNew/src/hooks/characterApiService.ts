@@ -102,10 +102,11 @@ export const CharacterService = {
   async addParty(party: Party) {
 
     try {
-      const list: Party[] = await axios.get(baseURL + "parties");
-      const newParties = list.length > 0
-          ? list.concat(party)
-          : [party];
+      //const list: Party[] = await axios.get(baseURL + "parties");
+      // const newParties = list.length > 0
+      //     ? list.concat(party)
+      //     : [party];
+      const newParties = [party]
       const response = await axios.post(baseURL+ "parties", newParties);
 
       return response
