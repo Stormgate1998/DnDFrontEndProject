@@ -101,7 +101,7 @@ export const CharacterService = {
 
   async addParty(party: Party) {
 
-    try {
+    try {//currently erases existing parties
       const list: Party[] = await axios.get(baseURL + "parties");
       console.log(list)
       const newParties = list.length > 0
@@ -163,7 +163,16 @@ export const CharacterService = {
     console.error('Error updating Party:', error);
     throw error;
   }
-}
+},
+  async getDmParties(GmId: string): Promise<Party[]>{
+    const list = await this.getParties();
+    if(list.length > 0){
+      const newList = list.filter(p => p.gmId === GmId)
+      return newList
+    }else{
+      return []
+    }
+  }
 
 
 };

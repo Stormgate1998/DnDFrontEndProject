@@ -4,6 +4,7 @@ import { useAuth } from "react-oidc-context";
 import { CharacterMaker } from "./pages/CharacterMaker";
 import { CharacterViewer } from "./pages/CharacterViewer";
 import { UserCharacterList } from "./pages/UserCharacterList";
+import GmParties from "./pages/GmParties";
 
 const queryClient = new QueryClient();
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: "/character/:characterId",
     element: <CharacterViewer />,
+  },
+  {
+    path: "/gmGames",
+    element: <GmParties />,
   },
 ]);
 
@@ -44,10 +49,14 @@ export const App = () => {
     return (
       <QueryClientProvider client={queryClient}>
         <div className="App">
-          {/* Your other components go here */}
-          <RouterProvider router={router} />
           Hello {auth.user?.profile.sub}{" "}
-          <button onClick={() => void auth.removeUser()}>Log out</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => void auth.removeUser()}
+          >
+            Log out
+          </button>
+          <RouterProvider router={router} />
         </div>
       </QueryClientProvider>
     );
@@ -56,9 +65,13 @@ export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">
-        {/* Your other components go here */}
+        <button
+          className="btn btn-primary"
+          onClick={() => void auth.signinRedirect()}
+        >
+          Log in
+        </button>
         <RouterProvider router={router} />
-        <button onClick={() => void auth.signinRedirect()}>Log in</button>
       </div>
     </QueryClientProvider>
   );

@@ -17,6 +17,11 @@ const Navbar: React.FC<NavbarProps> = () => {
             <h3 className="text-primary">Character List</h3>
           </Link>
         </div>
+        <div className="nav-item">
+          <Link to="/gmGames" className="nav-link">
+            <h3 className="text-primary">Gm Games</h3>
+          </Link>
+        </div>
       </div>
     </nav>
   );

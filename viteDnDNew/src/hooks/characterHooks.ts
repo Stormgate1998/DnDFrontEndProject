@@ -89,3 +89,14 @@ export const useUpdatePartyMutation = () => {
     },
   });
 };
+export const useGetUserGmPartiesQuery = (gmId: string) => useQuery({
+  queryKey: ["parties", gmId], // Include gmId in the queryKey
+  queryFn: async () => {
+    if (!gmId) {
+      // If gmId is not available, return an empty result or handle it accordingly
+      return [];
+    }
+    return await CharacterService.getDmParties(gmId);
+  },
+  refetchInterval: 30000,
+});
