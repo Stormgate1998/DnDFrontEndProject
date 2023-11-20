@@ -15,6 +15,7 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
   const handleSubmit = () => {
     const newParty: Party = { id, gmId, name, characterlist };
     addParty.mutate(newParty);
+    setName("");
   };
 
   return (
