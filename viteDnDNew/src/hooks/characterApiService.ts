@@ -108,11 +108,11 @@ export const CharacterService = {
           : [party];
       const response = await axios.post(baseURL+ "parties", newParties);
 
-      // Handle the response as needed
-      console.log('Response from POST:', response.data);
+      return response
     } catch (error) {
-      console.error('Error adding Character:', error);
-      throw error;
+      const newParty = [party]
+      const response = await axios.post(baseURL+ "parties", newParty);
+      return response
     }
 
   },

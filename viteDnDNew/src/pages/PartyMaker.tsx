@@ -19,7 +19,7 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
   };
 
   return (
-    <div>
+    <div className="form-control">
       <label>
         Party Name:
         <input
