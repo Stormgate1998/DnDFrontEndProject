@@ -1,5 +1,6 @@
 import React from "react";
 import { useGetUserGmPartiesQuery } from "../hooks/characterHooks";
+import Navbar from "../components/NavBar";
 
 const GmParties: React.FC = () => {
   // You can provide the gmId dynamically or fetch it from your component state or props
@@ -18,6 +19,7 @@ const GmParties: React.FC = () => {
   }
   return (
     <div>
+      <Navbar />
       <h2>Parties List</h2>
       {parties.data?.map((party) => (
         <div key={party.id}>

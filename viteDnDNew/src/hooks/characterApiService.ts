@@ -102,7 +102,7 @@ export const CharacterService = {
   async addParty(party: Party) {
 
     try {//currently erases existing parties
-      const list: Party[] = await axios.get(baseURL + "parties");
+      const list: Party[] = await this.getParties();
       console.log(list)
       const newParties = list.length > 0
           ? list.concat(party)
