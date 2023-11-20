@@ -5,16 +5,15 @@ import { Party } from "../objects/Party";
 const baseURL = '/api/store?key=';
 
 export const CharacterService = {
-  async getCharacters(weaponId: string): Promise<Character[]> {
+  async getCharacters(playerId: string): Promise<Character[]> {
     try {
-      const url = baseURL + weaponId;
+      const url = baseURL + playerId;
       const response = await axios.get(url);
       return response.data;
     } catch (error) {
-      // Check if the error is a 404 error
       if (axios.isAxiosError(error) && error.response?.status === 404) {
-        console.log('Characters not found for weaponId:', weaponId);
-        return []; // Return an empty array in case of a 404 error
+        console.log('Characters not found for player ID:', playerId);
+        return [];
       }
 
       console.error('Error fetching Characters:', error);
@@ -25,7 +24,7 @@ export const CharacterService = {
     if (Character.Id != "" && Character.PlayerId !== '') {
       try {
         // Fetch existing Characters
-        const existingCharacters = (await this.getCharacters(Character.PlayerId)) || [];
+        const existingCharacters = (await this.getCharacters(Character.PlayerId));
         const newCharacters = existingCharacters.length > 0
           ? existingCharacters.concat(Character)
           : [Character];

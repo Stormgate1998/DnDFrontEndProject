@@ -68,7 +68,6 @@ export const CharacterMaker = () => {
       ...prevCharacter,
       CurrentHitpoints: prevCharacter.MaxHitpoints,
     }));
-    localStorage.setItem("character", JSON.stringify(character));
     await addCharacter.mutateAsync(character);
     // Call the parent onSave function
   };
