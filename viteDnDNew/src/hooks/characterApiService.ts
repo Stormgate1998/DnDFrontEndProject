@@ -124,27 +124,41 @@ export const CharacterService = {
   },
   async updateParty(updatedParty: Party) {
   try {
-    // Get the list of parties
-    const partyList: Party[] = await axios.get(baseURL + "parties");
+  // Get the list of parties
+  const response = await axios.get(baseURL + "parties");
+  const partyList: Party[] = response.data;
 
-    // Find the index of the party with the provided gmId
-    const partyIndex = partyList.findIndex(party => party.id === updatedParty.id);
+  // Check if partyList is an array
+  if (!Array.isArray(partyList)) {
+    console.error('Invalid response format. Expected an array.');
+    return;
+  }
 
-    if (partyIndex === -1) {
-      // Party with provided gmId not found
-      console.error('Party not found for id:', updatedParty.id);
-      return;
+  // Find the index of the party with the provided gmId
+  let partyIndex = -1;
+  for (let i = 0; i < partyList.length; i++) {
+    if (partyList[i].id === updatedParty.id) {
+      partyIndex = i;
+      break;
     }
+  }
 
-    // Update the party at the found index with the new party
-    partyList[partyIndex] = updatedParty;
+  if (partyIndex === -1) {
+    // Party with provided gmId not found
+    console.error('Party not found for id:', updatedParty.id);
+    return;
+  }
 
-    // Update the parties in the database
-    const response = await axios.put(baseURL + "parties", partyList);
+  // Update the party at the found index with the new party
+  partyList[partyIndex] = updatedParty;
 
-    // Handle the response as needed
-    console.log('Response from PUT:', response.data);
-  } catch (error) {
+  // Update the parties in the database
+  const putResponse = await axios.put(baseURL + "parties", partyList);
+
+  // Handle the response as needed
+  console.log('Response from PUT:', putResponse.data);
+}
+ catch (error) {
     console.error('Error updating Party:', error);
     throw error;
   }
