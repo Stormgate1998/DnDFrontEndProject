@@ -19,16 +19,19 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
   };
 
   return (
-    <div className="form-control">
+    <div>
       <label>
         Party Name:
         <input
+          className="form-control"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
       </label>
-      <button onClick={handleSubmit}>Submit</button>
+      <button className="btn btn-primary" onClick={handleSubmit}>
+        Submit
+      </button>
     </div>
   );
 };

@@ -22,14 +22,17 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
   const handleAddToParty = () => {
     if (selectedParty && characterId && parties.data) {
       // Find the selected party in the list
-      const selectedPartyToUpdate = parties.data.find(
+      const selectedPartyToUpdate = parties.data.filter(
         (party: Party) => party.id === selectedParty
       );
 
       if (selectedPartyToUpdate) {
         const updatedParty: Party = {
-          ...selectedPartyToUpdate,
-          characterlist: [...selectedPartyToUpdate.characterlist, characterId],
+          ...selectedPartyToUpdate[0],
+          characterlist: [
+            ...selectedPartyToUpdate[0].characterlist,
+            characterId,
+          ],
         };
         // Call the updatePartyMutation to update the selected party with the new character
         updatePartyMutation.mutate(updatedParty);
@@ -47,9 +50,13 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
     return <div></div>;
   }
   return (
-    <div>
+    <div className="form-control">
       <label>Select Party:</label>
-      <select onChange={handleSelectChange} value={selectedParty}>
+      <select
+        onChange={handleSelectChange}
+        value={selectedParty}
+        className="form-control"
+      >
         <option value="" disabled>
           Select a Party
         </option>
@@ -59,7 +66,9 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
           </option>
         ))}
       </select>
-      <button onClick={handleAddToParty}>Add to Party</button>
+      <button className="btn btn-primary" onClick={handleAddToParty}>
+        Add to Party
+      </button>
     </div>
   );
 };
