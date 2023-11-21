@@ -11,8 +11,10 @@ jobs:
 
       - name: redeploy application
         run: |
+          cd viteDnDNew
           docker build -t josh_eslint -f eslint.Dockerfile .
           docker run -i --rm josh_eslint
+          cd ..
           docker compose pull
           docker compose build
           docker compose down

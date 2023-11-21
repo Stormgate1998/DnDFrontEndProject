@@ -1,9 +1,9 @@
 FROM node:20 as build
 
 WORKDIR /app
-COPY viteDnDNew/package*.json ./
+COPY package*.json ./
 RUN npm install
-COPY viteDnDNew/. .
+COPY . .
 RUN npm run build
 
 FROM nginx:alpine

@@ -1,11 +1,18 @@
 version: "3"
 services:
   client:
-    build: .
+    build: ./viteDnDNew
     # ports:
     # - 0.0.0.0:2001:80
     restart: unless-stopped
-  
+
+  joshdndwebsockets:
+    build: ./websocketAPI
+    container_name: joshdndwebsockets
+    ports:
+    - 0.0.0.0:2323:3000  
+    restart: unless-stopped
+
   swag:
     image: lscr.io/linuxserver/swag
     container_name: joshdndswag
