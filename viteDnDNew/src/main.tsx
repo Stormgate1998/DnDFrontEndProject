@@ -10,6 +10,8 @@ const oidcConfig = {
   authority: "https://barlowtestkeycloak.duckdns.org:2320/realms/DND",
   client_id: "DNDUser",
   redirect_uri: window.location.href,
+  scope: "openid profile",
+  respons_type: "code",
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
