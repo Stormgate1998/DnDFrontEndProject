@@ -9,7 +9,7 @@ import { App } from "./App";
 const oidcConfig = {
   authority: "https://barlowtestkeycloak.duckdns.org:2320/realms/DND",
   client_id: "dnduser",
-  redirect_uri: "https://dndbarlowproject.duckdns.org:2001/",
+  redirect_uri: window.location.href,
   scope: "openid profile",
 };
 

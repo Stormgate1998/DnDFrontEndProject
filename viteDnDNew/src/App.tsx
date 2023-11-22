@@ -71,7 +71,7 @@ export const App = () => {
         >
           Log in
         </button>
-        <RouterProvider router={router} />
+        <div>Please Log in to access the website</div>
       </div>
     </QueryClientProvider>
   );
