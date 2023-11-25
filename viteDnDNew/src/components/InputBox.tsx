@@ -15,7 +15,7 @@ const InputBox: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <div className="row my-3">
-      <div className="col-md-4">
+      <div className="col-md-6">
         <label className="form-label">{name}:</label>
       </div>
       <div className="col-md-4">

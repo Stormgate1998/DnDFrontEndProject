@@ -5,25 +5,46 @@ import { CharacterMaker } from "./pages/CharacterMaker";
 import { CharacterViewer } from "./pages/CharacterViewer";
 import { UserCharacterList } from "./pages/UserCharacterList";
 import GmParties from "./pages/GmParties";
+import Navbar from "./components/NavBar";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <CharacterMaker />,
+    element: (
+      <>
+        <Navbar />
+        <CharacterMaker />
+      </>
+    ),
   },
   {
     path: "/character",
-    element: <UserCharacterList />,
+    element: (
+      <>
+        <Navbar />
+        <UserCharacterList />
+      </>
+    ),
   },
   {
     path: "/character/:characterId",
-    element: <CharacterViewer />,
+    element: (
+      <>
+        <Navbar />
+        <CharacterViewer />
+      </>
+    ),
   },
   {
     path: "/gmGames",
-    element: <GmParties />,
+    element: (
+      <>
+        <Navbar />
+        <GmParties />
+      </>
+    ),
   },
 ]);
 
@@ -49,7 +70,7 @@ export const App = () => {
     return (
       <QueryClientProvider client={queryClient}>
         <div className="App">
-          Hello {auth.user?.profile.sub}{" "}
+          Hello {auth.user?.profile.name}{" "}
           <button
             className="btn btn-primary"
             onClick={() => void auth.removeUser()}
@@ -61,7 +82,7 @@ export const App = () => {
       </QueryClientProvider>
     );
   }
-
+  // auth.user?.profile.sub;
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">

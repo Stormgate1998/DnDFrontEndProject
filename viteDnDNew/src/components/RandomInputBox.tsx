@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import InputBox from "./InputBox";
 
 interface RandomRollerProps {
@@ -6,7 +6,8 @@ interface RandomRollerProps {
   numberOfRolls: number;
   name: string;
   boxValue: number;
-  onBoxChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onBoxChange: (event: ChangeEvent<HTMLInputElement>) => void; // New prop to receive the list of rolls
+  setRollsList: React.Dispatch<React.SetStateAction<number[]>>; // New prop to set rollsList
 }
 
 const RandomInputBox: React.FC<RandomRollerProps> = ({
@@ -14,23 +15,22 @@ const RandomInputBox: React.FC<RandomRollerProps> = ({
   numberOfRolls,
   name,
   boxValue,
-  onBoxChange,
+  onBoxChange, // New prop to receive the list of rolls
+  setRollsList, // New prop to set rollsList
 }) => {
-  const [rolls, setRolls] = useState<number[]>([]);
-
   const handleRoll = () => {
     const newRolls = Array.from(
       { length: numberOfRolls },
       () => Math.floor(Math.random() * maxNumber) + 1
     );
-    setRolls(newRolls);
+    setRollsList(newRolls); // Set the rollsList using setRollsList prop
   };
 
   return (
     <div className="container-sm">
-      <div className="border my-3 rounded-3">
+      <div className="">
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-6">
             <InputBox
               name={name}
               type="number"
@@ -38,13 +38,10 @@ const RandomInputBox: React.FC<RandomRollerProps> = ({
               onChange={onBoxChange}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-2">
             <button className="btn btn-primary" onClick={handleRoll}>
               Roll
             </button>
-          </div>
-          <div className="col-md-4">
-            {rolls.length > 0 && <p>{rolls.map((roll) => roll).join(" ")}</p>}
           </div>
         </div>
       </div>
