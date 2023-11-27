@@ -5,7 +5,10 @@ import {
 } from "../hooks/characterHooks";
 import { useEffect, useMemo, useState } from "react";
 import { Character } from "../objects/Character";
+import { useAuth } from "react-oidc-context";
+
 export const PartyViewer: React.FC = () => {
+  const auth = useAuth();
   const partyId = useParams();
   const protectedPartyId = String(partyId) ?? "";
   const party = useGetPartiesQuery();
@@ -58,7 +61,7 @@ export const PartyViewer: React.FC = () => {
       // Handle error appropriately
     }
   }, [charactersQuery.data, thisParty]);
-  
+
   //display the characters in a grid thing, display name, race, class, and temporary hp, the whole shebang
   //get characterid from parameters
   // <Route path="/yourRoute/:variable1/:variable2" component={YourComponent} />
@@ -70,6 +73,7 @@ export const PartyViewer: React.FC = () => {
     <div>
       <h1>{thisParty.id}</h1>
       <p>This is a basic React component.</p>
+      <p>{auth.user?.profile.name}</p>
       <ul>
         {characterList &&
           characterList.map((character) => (
