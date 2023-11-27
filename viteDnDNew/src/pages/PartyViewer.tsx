@@ -57,7 +57,7 @@ export const PartyViewer: React.FC = () => {
       console.error("Error fetching Characters:", error);
       // Handle error appropriately
     }
-  }, [thisParty]);
+  }, [charactersQuery.data, thisParty]);
   //get the characters for that player
   //check the characterlist for the party
   //if the characterid in the characterlist matches one of the ones in the list of characters
