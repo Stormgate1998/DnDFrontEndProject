@@ -20,6 +20,18 @@ export const CharacterService = {
       throw error;
     }
   },
+  async getManyCharacters(playerIds: string[]): Promise<Character[][]> {
+    try {
+      const characterPromises = playerIds.map((playerId) =>
+        this.getCharacters(playerId)
+      );
+      const charactersArrays = await Promise.all(characterPromises);
+      return charactersArrays;
+    } catch (error) {
+      console.error("Error fetching Characters for multiple players:", error);
+      throw error;
+    }
+  },
   async addCharacter(Character: Character) {
     if (Character.Id != "" && Character.PlayerId !== "") {
       try {
@@ -182,6 +194,6 @@ export const CharacterService = {
     const existingParties = (await this.getParties()) ?? [];
     const newList = existingParties.filter((p) => p.id !== party.id);
     await axios.delete(baseURL + "parties");
-    await axios.post(baseURL + "parties", newList)
+    await axios.post(baseURL + "parties", newList);
   },
 };

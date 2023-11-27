@@ -26,6 +26,15 @@ export const useGetCharactersQuery = (playerId: string) =>
     refetchInterval: 30000,
   });
 
+export const useGetCharactersForManyPlayersQuery = (playerIDs: string[]) =>
+  useQuery({
+    queryKey: ["characters"],
+    queryFn: async () => {
+      return await CharacterService.getManyCharacters(playerIDs);
+    },
+    refetchInterval: 30000,
+  });
+
 export const useAddCharacters = () => {
   return useMutation({
     mutationFn: async (newCharacter: Character) => {

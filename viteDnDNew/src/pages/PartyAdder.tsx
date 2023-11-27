@@ -5,12 +5,15 @@ import {
   useUpdatePartyMutation,
 } from "../hooks/characterHooks";
 import { Spinner } from "../components/Spinner";
+import { useAuth } from "react-oidc-context";
 // Replace with the correct path
 interface PartySelectorProps {
   characterId: string; // Assuming characterId is a string, adjust if necessary
 }
 
 const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
+  const auth = useAuth();
+  const userId = auth.user?.profile.sub ?? "";
   const parties = useGetPartiesQuery();
   const updatePartyMutation = useUpdatePartyMutation();
   const [selectedParty, setSelectedParty] = useState<string>(""); // State to store the selected party
@@ -33,6 +36,7 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
             ...selectedPartyToUpdate[0].characterlist,
             characterId,
           ],
+          playerlist: [...selectedPartyToUpdate[0].playerlist, userId],
         };
         // Call the updatePartyMutation to update the selected party with the new character
         updatePartyMutation.mutate(updatedParty);
