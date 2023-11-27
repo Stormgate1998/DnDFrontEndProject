@@ -4,7 +4,7 @@ List of user-started campaigns
 List of user-created characters
 Ability to delete either of them
 Ability to create party
-
+A way to store the user's preferred name in local storage, instead of the Keycloak name. ELEPHANT
  */
 
 import GmParties from "./GmParties";
