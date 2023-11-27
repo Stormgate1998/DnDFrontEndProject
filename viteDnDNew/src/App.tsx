@@ -6,6 +6,7 @@ import { CharacterViewer } from "./pages/CharacterViewer";
 import { UserCharacterList } from "./pages/UserCharacterList";
 import GmParties from "./pages/GmParties";
 import Navbar from "./components/NavBar";
+import { UserPage } from "./pages/UserPage";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,15 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <GmParties />
+      </>
+    ),
+  },
+  {
+    path: "/yourPage",
+    element: (
+      <>
+        <Navbar />
+        <UserPage />
       </>
     ),
   },

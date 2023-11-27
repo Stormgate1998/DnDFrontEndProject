@@ -22,6 +22,11 @@ const Navbar: React.FC<NavbarProps> = () => {
             <h3 className="text-primary">Gm Games</h3>
           </Link>
         </div>
+        <div className="nav-item">
+          <Link to="/yourPage" className="nav-link">
+            <h3 className="text-primary">Your Page</h3>
+          </Link>
+        </div>
       </div>
     </nav>
   );

@@ -8,13 +8,18 @@ Ability to create party
  */
 
 import GmParties from "./GmParties";
+import { PartyMaker } from "./PartyMaker";
 import { UserCharacterList } from "./UserCharacterList";
 
 export const UserPage = () => {
   return (
     <div>
+      <h2>Your Characters</h2>
       <UserCharacterList />
+      <h2>Your Parties</h2>
       <GmParties />
+      <h2>Create a Party</h2>
+      <PartyMaker />
     </div>
   );
 };

@@ -20,7 +20,6 @@ const GmParties: React.FC = () => {
   }
   return (
     <div>
-      <h2>Parties List</h2>
       {parties.data?.map((party) => (
         <div className="row">
           <div key={party.id}>
