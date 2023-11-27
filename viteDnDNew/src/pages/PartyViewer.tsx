@@ -73,7 +73,7 @@ export const PartyViewer: React.FC = () => {
     <div>
       <h1>{thisParty.id}</h1>
       <p>This is a basic React component.</p>
-      <p>{auth.user?.profile.name}</p>
+      <p>{auth.user?.profile.sub}</p>
       <ul>
         {characterList &&
           characterList.map((character) => (
