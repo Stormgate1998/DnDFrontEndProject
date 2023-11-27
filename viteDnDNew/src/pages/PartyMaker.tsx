@@ -12,11 +12,12 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
   const [name, setName] = useState("");
   const gmId = userId !== undefined ? userId : "";
   const characterlist: string[] = []; // Empty characterlist
+  const playerlist: string[] = [];
   const id: string = Date.now().toString();
   const addParty = useAddPartyQuery();
 
   const handleSubmit = () => {
-    const newParty: Party = { id, gmId, name, characterlist };
+    const newParty: Party = { id, gmId, name, characterlist, playerlist };
     addParty.mutate(newParty);
     setName("");
   };

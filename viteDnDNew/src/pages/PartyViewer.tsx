@@ -58,11 +58,8 @@ export const PartyViewer: React.FC = () => {
       // Handle error appropriately
     }
   }, [charactersQuery.data, thisParty]);
-  //get the characters for that player
-  //check the characterlist for the party
-  //if the characterid in the characterlist matches one of the ones in the list of characters
-  //add that one to characterList
-  //display the characters in a grid thing, the whole shebang
+  
+  //display the characters in a grid thing, display name, race, class, and temporary hp, the whole shebang
   //get characterid from parameters
   // <Route path="/yourRoute/:variable1/:variable2" component={YourComponent} />
   // const { variable1, variable2 } = useParams();
