@@ -9,10 +9,11 @@ import { useAuth } from "react-oidc-context";
 
 export const PartyViewer: React.FC = () => {
   const auth = useAuth();
-  const partyId = useParams();
+  const { partyId, usersCharacter } = useParams();
   const protectedPartyId = String(partyId) ?? "";
   const party = useGetPartiesQuery();
   const [characterList, setCharacterList] = useState<Character[]>([]);
+  const [playersCharacter, setPlayersCharacter] = useState<Character>();
   const thisParty = useMemo(() => {
     return party.data
       ? party.data.find((p) => p.id === protectedPartyId) ?? {
@@ -62,24 +63,62 @@ export const PartyViewer: React.FC = () => {
     }
   }, [charactersQuery.data, thisParty]);
 
-  //display the characters in a grid thing, display name, race, class, and temporary hp, the whole shebang
-  //get characterid from parameters
-  // <Route path="/yourRoute/:variable1/:variable2" component={YourComponent} />
-  // const { variable1, variable2 } = useParams();
-  // If it exists, display more information below about your character
-  //otherwise, don't (?)
+  if (usersCharacter) {
+    const PlayersCharacter = characterList.filter(
+      (c) => c.Id === usersCharacter
+    );
+    if (PlayersCharacter.length > 0) {
+      setPlayersCharacter(PlayersCharacter[0]);
+    }
+  }
 
   return (
     <div>
       <h1>{thisParty.id}</h1>
       <p>This is a basic React component.</p>
       <p>{auth.user?.profile.sub}</p>
-      <ul>
-        {characterList &&
-          characterList.map((character) => (
-            <li key={character.Id}>{character.Name}</li>
-          ))}
-      </ul>
+      {characterList &&
+        characterList.map((character) => (
+          <div className="border">
+            <p key={character.Id}>{character.Name}</p>
+            <p>{character.Race}</p>
+            <p>{character.TemporaryHitpoints}</p>
+          </div>
+        ))}
+
+      {playersCharacter && (
+        <div>
+          <h2>{playersCharacter.Name}</h2>
+          <h2>{playersCharacter.Race}</h2>
+          <h2>
+            {playersCharacter.Class.class}, {playersCharacter.Class.level}
+          </h2>
+          <h2>Hitpoints: {playersCharacter.CurrentHitpoints}</h2>
+          <h2>
+            Strength Modifier:{" "}
+            {Math.floor((playersCharacter.Strength - 10) / 2)}
+          </h2>
+          <h2>
+            Dexterity Modifier:{" "}
+            {Math.floor((playersCharacter.Dexterity - 10) / 2)}
+          </h2>
+          <h2>
+            Constitution Modifier:{" "}
+            {Math.floor((playersCharacter.Constitution - 10) / 2)}
+          </h2>
+          <h2>
+            Wisdom Modifier: {Math.floor((playersCharacter.Wisdom - 10) / 2)}
+          </h2>
+          <h2>
+            Intelligence Modifier:{" "}
+            {Math.floor((playersCharacter.Intelligence - 10) / 2)}
+          </h2>
+          <h2>
+            Charisma Modifier:{" "}
+            {Math.floor((playersCharacter.Charisma - 10) / 2)}
+          </h2>
+        </div>
+      )}
     </div>
   );
 };

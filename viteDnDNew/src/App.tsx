@@ -7,6 +7,7 @@ import { UserCharacterList } from "./pages/UserCharacterList";
 import GmParties from "./pages/GmParties";
 import Navbar from "./components/NavBar";
 import { UserPage } from "./pages/UserPage";
+import { PartyViewer } from "./pages/PartyViewer";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,15 @@ const router = createBrowserRouter([
       <>
         <Navbar />
         <UserPage />
+      </>
+    ),
+  },
+  {
+    path: "/gamePage/:partyId/:characterId",
+    element: (
+      <>
+        <Navbar />
+        <PartyViewer />
       </>
     ),
   },
