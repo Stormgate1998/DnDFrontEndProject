@@ -3,6 +3,7 @@ import "../App.css";
 import { Party } from "../objects/Party";
 import { useAddPartyQuery } from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
+import toast from "react-hot-toast";
 
 interface ViewerProps {}
 
@@ -18,7 +19,7 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
 
   const handleSubmit = () => {
     const newParty: Party = { id, gmId, name, characterlist, playerlist };
-    addParty.mutate(newParty);
+    addParty.mutateAsync(newParty).then(() => toast.success("Added Party"));
     setName("");
   };
 

@@ -42,7 +42,7 @@ export const PartyViewer: React.FC = () => {
       // Access the characters from the query
       const characters = charactersQuery.data;
 
-      // Check if characters is not undefined
+      // Check if characters is not undefnined
       if (characters) {
         // Filter characters based on characterlist
         for (const character of characters) {
@@ -74,12 +74,12 @@ export const PartyViewer: React.FC = () => {
 
   return (
     <div>
-      <h1>{thisParty.id}</h1>
-      <p>This is a basic React component.</p>
+      {usersCharacter && <div>{usersCharacter}</div>}
+      <h1>{thisParty.name}</h1>
       <p>{auth.user?.profile.sub}</p>
       {characterList &&
         characterList.map((character) => (
-          <div className="border">
+          <div className="border" key={character.Id}>
             <p key={character.Id}>{character.Name}</p>
             <p>{character.Race}</p>
             <p>{character.TemporaryHitpoints}</p>

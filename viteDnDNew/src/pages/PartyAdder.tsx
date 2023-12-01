@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Party } from "../objects/Party";
 import {
+  useEditCharacters,
+  useGetCharactersQuery,
   useGetPartiesQuery,
   useUpdatePartyMutation,
 } from "../hooks/characterHooks";
 import { Spinner } from "../components/Spinner";
 import { useAuth } from "react-oidc-context";
+import toast from "react-hot-toast";
 // Replace with the correct path
 interface PartySelectorProps {
   characterId: string; // Assuming characterId is a string, adjust if necessary
@@ -15,9 +18,14 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
   const auth = useAuth();
   const userId = auth.user?.profile.sub ?? "";
   const parties = useGetPartiesQuery();
+  const characterList = useGetCharactersQuery(userId);
+  const editCharacter = useEditCharacters(userId);
   const updatePartyMutation = useUpdatePartyMutation();
   const [selectedParty, setSelectedParty] = useState<string>(""); // State to store the selected party
 
+  const thisCharacter = characterList.data?.filter(
+    (c) => c.Id === characterId
+  )[0];
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedParty(event.target.value);
   };
@@ -30,16 +38,49 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
       );
 
       if (selectedPartyToUpdate) {
-        const updatedParty: Party = {
-          ...selectedPartyToUpdate[0],
-          characterlist: [
-            ...selectedPartyToUpdate[0].characterlist,
-            characterId,
-          ],
-          playerlist: [...selectedPartyToUpdate[0].playerlist, userId],
-        };
-        // Call the updatePartyMutation to update the selected party with the new character
-        updatePartyMutation.mutate(updatedParty);
+        if (selectedPartyToUpdate[0].characterlist.length > 0) {
+          const existingCharacterIndex =
+            selectedPartyToUpdate[0].characterlist.indexOf(characterId);
+
+          if (existingCharacterIndex === -1) {
+            const updatedParty: Party = {
+              ...selectedPartyToUpdate[0],
+              characterlist: [
+                ...selectedPartyToUpdate[0].characterlist,
+                characterId,
+              ],
+              playerlist: [...selectedPartyToUpdate[0].playerlist, userId],
+            };
+            // Call the updatePartyMutation to update the selected party with the new character
+            updatePartyMutation
+              .mutateAsync(updatedParty)
+              .then(() => toast.success("Updated Party"));
+            if (thisCharacter) {
+              const newCharacter = {
+                ...thisCharacter,
+                PartyId: updatedParty.id,
+              };
+              editCharacter.mutateAsync(newCharacter);
+            }
+          }
+        } else {
+          const updatedParty: Party = {
+            ...selectedPartyToUpdate[0],
+            characterlist: [characterId],
+            playerlist: [userId],
+          };
+          // Call the updatePartyMutation to update the selected party with the new character
+          updatePartyMutation
+            .mutateAsync(updatedParty)
+            .then(() => toast.success("Updated Party"));
+          if (thisCharacter) {
+            const newCharacter = {
+              ...thisCharacter,
+              PartyId: updatedParty.id,
+            };
+            editCharacter.mutate(newCharacter);
+          }
+        }
       }
     }
   };

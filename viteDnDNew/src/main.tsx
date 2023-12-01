@@ -5,6 +5,7 @@ import "bootstrap";
 import "./custom.scss";
 import { AuthProvider } from "react-oidc-context";
 import { App } from "./App";
+import { DarkModeProvider } from "./DarkModeContext";
 
 const oidcConfig = {
   authority: "https://barlowtestkeycloak.duckdns.org:2320/realms/DND",
@@ -16,7 +17,9 @@ const oidcConfig = {
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AuthProvider {...oidcConfig}>
     <React.StrictMode>
-      <App />
+      <DarkModeProvider>
+        <App />
+      </DarkModeProvider>
     </React.StrictMode>
   </AuthProvider>
 );

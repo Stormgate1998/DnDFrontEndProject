@@ -6,6 +6,8 @@ import InputBox from "../components/InputBox";
 import { useAddCharacters } from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
 import StatBlock from "./StatBlock";
+import InputBoxWithType from "../components/InputBoxWithType";
+import toast from "react-hot-toast";
 
 export const CharacterMaker = () => {
   const addCharacter = useAddCharacters();
@@ -69,7 +71,9 @@ export const CharacterMaker = () => {
       ...prevCharacter,
       CurrentHitpoints: prevCharacter.MaxHitpoints,
     }));
-    await addCharacter.mutateAsync(character);
+    await addCharacter
+      .mutateAsync(character)
+      .then(() => toast.success("Added Character"));
     // Call the parent onSave function
   };
 
@@ -149,15 +153,15 @@ export const CharacterMaker = () => {
             />
           </div>
           <div className="col-md-6">
-            <InputBox
-              name="Armor_Class"
+            <InputBoxWithType<Character>
+              name="ArmorClass"
               type="number"
               value={character.ArmorClass}
               onChange={handleChange}
             />
           </div>
           <div className="col-md-6">
-            <InputBox
+            <InputBoxWithType<Character>
               name="Initiative"
               type="number"
               value={character.Initiative}
@@ -165,16 +169,16 @@ export const CharacterMaker = () => {
             />
           </div>
           <div className="col-md-6">
-            <InputBox
-              name="Max_Hitpoints"
+            <InputBoxWithType<Character>
+              name="MaxHitpoints"
               type="number"
               value={character.MaxHitpoints}
               onChange={handleChange}
             />
           </div>
           <div className="col-md-6">
-            <InputBox
-              name="Hit_Dice"
+            <InputBoxWithType<Character>
+              name="HitDice"
               type="text"
               value={character.HitDice}
               onChange={handleChange}

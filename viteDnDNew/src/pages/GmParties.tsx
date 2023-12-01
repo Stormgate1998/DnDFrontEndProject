@@ -2,6 +2,8 @@ import React from "react";
 import { useGetUserGmPartiesQuery } from "../hooks/characterHooks";
 import { useDeleteParty } from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 const GmParties: React.FC = () => {
   const auth = useAuth();
   const userId = auth.user?.profile.sub;
@@ -21,9 +23,12 @@ const GmParties: React.FC = () => {
   return (
     <div>
       {parties.data?.map((party) => (
-        <div className="row">
-          <div key={party.id}>
+        <div className="row border" key={party.id}>
+          <div>
             <h3>Party: {party.name}</h3>
+            <Link to={`/gamePage/${party.id}/0`} className="nav-link">
+              <h2>Go to Party Viewer</h2>
+            </Link>
             <ul>
               {party.characterlist.map((character, index) => (
                 <li key={index}>{character}</li>
@@ -32,7 +37,9 @@ const GmParties: React.FC = () => {
             <div
               className="btn btn-primary"
               onClick={() => {
-                deleteParty.mutate(party);
+                deleteParty
+                  .mutateAsync(party)
+                  .then(() => toast.success("Deleted Character"));
               }}
             >
               Delete

@@ -5,9 +5,10 @@ import {
   useDeleteCharacters,
   useGetCharactersQuery,
 } from "../hooks/characterHooks";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import PartySelector from "./PartyAdder";
 import { useAuth } from "react-oidc-context";
+import toast from "react-hot-toast";
 
 interface ViewerProps {}
 
@@ -38,13 +39,23 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
       <header className="App-header">
         {character ? (
           <div>
-            <PartySelector characterId={character.Id} />
             <div
               className="btn btn-primary"
-              onClick={() => deleteCharacter.mutate(character)}
+              onClick={() => deleteCharacter.mutateAsync(character).then(() => toast.success("Deleted Character"))}
             >
               Delete Character
             </div>
+            {character.PartyId.length > 0 ? (
+              <Link
+                to={`/gamePage/${character.PartyId}/${character.Id}`}
+                className="nav-link"
+              >
+                <div className="btn btn-primary">Go To Party Viewer</div>
+              </Link>
+            ) : (
+              <PartySelector characterId={character.Id} />
+            )}
+
             <h2>Name: {character.Name}</h2>
             <p>Class: {character.Class.class}</p>
             <p>Level: {character.Class.level}</p>

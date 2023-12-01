@@ -8,6 +8,7 @@ import GmParties from "./pages/GmParties";
 import Navbar from "./components/NavBar";
 import { UserPage } from "./pages/UserPage";
 import { PartyViewer } from "./pages/PartyViewer";
+import { useDarkMode } from "./useDarkMode";
 
 const queryClient = new QueryClient();
 
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
 
 export const App = () => {
   const auth = useAuth();
-
+  const { darkMode, toggleDarkMode } = useDarkMode();
   switch (auth.activeNavigator) {
     case "signinSilent":
       return <div>Signing you in...</div>;
@@ -87,15 +88,22 @@ export const App = () => {
   }
 
   if (auth.isAuthenticated) {
+    const preferredName = localStorage.getItem("Preferred");
     return (
       <QueryClientProvider client={queryClient}>
-        <div className="App">
-          Hello {auth.user?.profile.name}{" "}
+        <div className={darkMode ? "App dark" : "App"}>
+          Hello{" "}
+          {preferredName && preferredName.length > 0
+            ? preferredName
+            : auth.user?.profile.name}
           <button
             className="btn btn-primary"
             onClick={() => void auth.removeUser()}
           >
             Log out
+          </button>
+          <button onClick={toggleDarkMode}>
+            {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
           </button>
           <RouterProvider router={router} />
         </div>
