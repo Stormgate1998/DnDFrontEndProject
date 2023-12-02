@@ -16,10 +16,10 @@ const oidcConfig = {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AuthProvider {...oidcConfig}>
-    <React.StrictMode>
-      <DarkModeProvider>
+    <DarkModeProvider>
+      <React.StrictMode>
         <App />
-      </DarkModeProvider>
-    </React.StrictMode>
+      </React.StrictMode>
+    </DarkModeProvider>
   </AuthProvider>
 );

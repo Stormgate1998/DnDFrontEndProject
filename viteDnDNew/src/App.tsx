@@ -91,19 +91,26 @@ export const App = () => {
     const preferredName = localStorage.getItem("Preferred");
     return (
       <QueryClientProvider client={queryClient}>
-        <div className={darkMode ? "App dark" : "App"}>
+        <div className="App">
           Hello{" "}
           {preferredName && preferredName.length > 0
             ? preferredName
             : auth.user?.profile.name}
           <button
-            className="btn btn-primary"
+            className={
+              darkMode ? "btn btn-secondary m-3" : "btn btn-primary m-3"
+            }
             onClick={() => void auth.removeUser()}
           >
             Log out
           </button>
-          <button onClick={toggleDarkMode}>
-            {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          <button
+            onClick={toggleDarkMode}
+            className={
+              darkMode ? "btn btn-primary m-3" : "btn btn-secondary m-3"
+            }
+          >
+            {darkMode ? "Switch to Green Mode" : "Switch to Blue Mode"}
           </button>
           <RouterProvider router={router} />
         </div>
@@ -115,11 +122,18 @@ export const App = () => {
     <QueryClientProvider client={queryClient}>
       <div className="App">
         <button
-          className="btn btn-primary"
+          className={darkMode ? "btn btn-secondary m-3" : "btn btn-primary m-3"}
           onClick={() => void auth.signinRedirect()}
         >
           Log in
         </button>
+        <button
+          className={darkMode ? "btn btn-primary m-3" : "btn btn-secondary m-3"}
+          onClick={toggleDarkMode}
+        >
+          {darkMode ? "Switch to Green Mode" : "Switch to Blue Mode"}
+        </button>
+        <div>{darkMode.toString()}</div>
         <div>Please Log in to access the website</div>
       </div>
     </QueryClientProvider>
