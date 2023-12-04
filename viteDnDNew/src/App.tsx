@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/gamePage/:partyId/:characterId",
+    path: "/gamePage/:partyId_characterId",
     element: (
       <>
         <Navbar />

@@ -26,7 +26,7 @@ const GmParties: React.FC = () => {
         <div className="row border" key={party.id}>
           <div>
             <h3>Party: {party.name}</h3>
-            <Link to={`/gamePage/${party.id}/0`} className="nav-link">
+            <Link to={`/gamePage/${party.id}_0`} className="nav-link">
               <h2>Go to Party Viewer</h2>
             </Link>
             <ul>

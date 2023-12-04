@@ -9,7 +9,8 @@ import { useAuth } from "react-oidc-context";
 
 export const PartyViewer: React.FC = () => {
   const auth = useAuth();
-  const { partyId, usersCharacter } = useParams();
+  const { combinedParam } = useParams();
+  const [partyId = "", usersCharacter = ""] = (combinedParam || "").split("_");
   const protectedPartyId = String(partyId) ?? "";
   const party = useGetPartiesQuery();
   const [characterList, setCharacterList] = useState<Character[]>([]);

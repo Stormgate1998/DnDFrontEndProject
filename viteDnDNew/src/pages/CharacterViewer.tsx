@@ -47,7 +47,7 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
             </div>
             {character.PartyId.length > 0 ? (
               <Link
-                to={`/gamePage/${character.PartyId}/${character.Id}`}
+                to={`/gamePage/${character.PartyId}_${character.Id}`}
                 className="nav-link"
               >
                 <div className="btn btn-primary">Go To Party Viewer</div>
