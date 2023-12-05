@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import {
+  useEditCharacters,
   useGetCharactersForManyPlayersQuery,
   useGetCharactersQuery,
   useGetPartiesQuery,
@@ -38,11 +39,42 @@ export const PartyViewer: React.FC = () => {
     }
   }, [party.data, partyInfo]);
 
-  const [characterList, setCharacterList] = useState<Character[]>([]);
+  // const [characterList, setCharacterList] = useState<Character[]>([]);
   const [playersCharacter, setPlayersCharacter] = useState<Character>();
   const playersCharacters = useGetCharactersQuery(userId ?? "");
+  const [newHitpoints, setNewHitpoints] = useState(0);
+  const editPlayerCharacter = useEditCharacters();
 
-  const charactersQuery = useGetCharactersForManyPlayersQuery(
+  const handleHitpointsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewHitpoints(parseInt(e.target.value));
+  };
+
+  const handleUpdateHitpoints = () => {
+    const newValue = newHitpoints;
+
+    if (playersCharacter) {
+      setPlayersCharacter((prevCharacter: Character | undefined) => ({
+        ...prevCharacter!,
+        CurrentHitpoints: newValue,
+      }));
+
+      // Update characterList
+
+      // setcharacterlist to same, but where character.id == playersCharacter.Id, update CurrentHitpoints
+      editPlayerCharacter
+        .mutateAsync({
+          ...playersCharacter,
+          CurrentHitpoints: newValue,
+        })
+        .then(() => {
+          console.log(`Updating character hitpoints to ${newHitpoints}`);
+          const thispage = window.location.href;
+          window.location.href = thispage; // Redirect to the current page
+        });
+    }
+  };
+
+  const charactersforPlayersInPartyQuery = useGetCharactersForManyPlayersQuery(
     thisParty.playerlist
   );
 
@@ -53,32 +85,18 @@ export const PartyViewer: React.FC = () => {
   //   sendMessage(newMessage);
   //   setNewMessage("");
   // };
-
-  useEffect(() => {
-    console.log("DATA" + thisParty.characterlist);
-    const isCharacterIdInList = (character: Character): boolean => {
-      return thisParty.characterlist.some((c) => c === character.Id);
-    };
-    try {
-      // Use the new hook for fetching characters for multiple players
-
-      // Access the characters from the query
-      // Check if characters is not undefined
-      charactersQuery.data?.forEach((characterArray) => {
-        characterArray.forEach((character) => {
-          if (isCharacterIdInList(character)) {
-            setCharacterList((prevList) => [...prevList, character]);
-            console.log(
-              `Character with Id ${character.Id} found in characterList`
-            );
-          }
-        });
-      });
-    } catch (error) {
-      console.error("Error fetching Characters:", error);
-      // Handle error appropriately
-    }
-  }, [charactersQuery.data, thisParty.characterlist]);
+  const isCharacterIdInList = (character: Character): boolean => {
+    return thisParty.characterlist.some((c) => c === character.Id);
+  };
+  const nestedcharacterList: Character[][] =
+    charactersforPlayersInPartyQuery.data?.map((playersCharactersArray) => {
+      const playerCharactersInParty = playersCharactersArray.filter((c) =>
+        isCharacterIdInList(c)
+      );
+      return playerCharactersInParty;
+    }) ?? [];
+  const emptyList: Character[] = [];
+  const characterList = emptyList.concat(...nestedcharacterList);
 
   useEffect(() => {
     if (playersCharacters.data) {
@@ -103,26 +121,44 @@ export const PartyViewer: React.FC = () => {
   return (
     <div>
       <h1>{thisParty.name}</h1>
-      <p>{charactersQuery.data?.length}</p>
-      {/* Display list of characters */}
-      {characterList &&
-        characterList.map((character) => (
-          <div className="border" key={character.Id}>
-            <p key={character.Id}>{character.Name}</p>
-            <p>{character.Race}</p>
-            <p>{character.TemporaryHitpoints}</p>
-          </div>
-        ))}
+      {characterList && (
+        <div className="row row-cols-1 row-cols-md-2 g-4">
+          {characterList.map((character) => (
+            <div
+              className={`col ${character.CurrentHitpoints < 20 ? "glow" : ""}`}
+              key={character.Id}
+            >
+              <div className="border rounded p-3">
+                <p key={character.Id}>{character.Name}</p>
+                <p>{character.Race}</p>
+                <p>{character.CurrentHitpoints}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Display player's character details if available */}
       {playersCharacter && (
-        <div className="border">
+        <div className="border my-4">
           <h2>{playersCharacter.Name}</h2>
           <h2>{playersCharacter.Race}</h2>
           <h2>
             {playersCharacter.Class.class}, {playersCharacter.Class.level}
           </h2>
-          <h2>Hitpoints: {playersCharacter.CurrentHitpoints}</h2>
+          <h2>
+            Hitpoints: {playersCharacter.CurrentHitpoints}/
+            {playersCharacter.MaxHitpoints}
+          </h2>
+          <input
+            type="number"
+            placeholder="New Hitpoints"
+            value={newHitpoints}
+            onChange={handleHitpointsChange}
+          />
+          <button onClick={() => handleUpdateHitpoints()}>
+            Update Hitpoints
+          </button>
           <h2>
             Strength Modifier:{" "}
             {Math.floor((playersCharacter.Strength - 10) / 2)}

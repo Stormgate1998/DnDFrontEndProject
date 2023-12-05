@@ -198,3 +198,25 @@ $success: #880099;
 
 /* Mobile layout */
 @media (max-width: 767px) {}
+
+.col {
+    transition: box-shadow 0.5s;
+}
+
+.glow {
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    }
+}

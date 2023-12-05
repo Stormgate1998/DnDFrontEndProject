@@ -48,14 +48,17 @@ export const useAddCharacters = () => {
   });
 };
 
-export const useEditCharacters = (playerId: string) => {
+export const useEditCharacters = () => {
   return useMutation({
     mutationFn: async (newCharacter: Character) => {
       return await CharacterService.updateCharacter(newCharacter);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["characters", playerId] });
+      queryClient.invalidateQueries({ queryKey: ["characters"] });
     },
+    onError: () => {
+      console.log("error on editing character")
+    }
   });
 };
 

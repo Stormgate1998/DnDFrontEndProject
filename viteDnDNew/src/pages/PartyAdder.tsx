@@ -9,17 +9,19 @@ import {
 import { Spinner } from "../components/Spinner";
 import { useAuth } from "react-oidc-context";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 // Replace with the correct path
 interface PartySelectorProps {
   characterId: string; // Assuming characterId is a string, adjust if necessary
 }
 
 const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
+  const navigate = useNavigate();
   const auth = useAuth();
   const userId = auth.user?.profile.sub ?? "";
   const parties = useGetPartiesQuery();
   const characterList = useGetCharactersQuery(userId);
-  const editCharacter = useEditCharacters(userId);
+  const editCharacter = useEditCharacters();
   const updatePartyMutation = useUpdatePartyMutation();
   const [selectedParty, setSelectedParty] = useState<string>(""); // State to store the selected party
 
@@ -49,7 +51,10 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
                 ...selectedPartyToUpdate[0].characterlist,
                 characterId,
               ],
-              playerlist: [...selectedPartyToUpdate[0].playerlist, userId],
+
+              playerlist: [
+                ...new Set([...selectedPartyToUpdate[0].playerlist, userId]),
+              ],
             };
             // Call the updatePartyMutation to update the selected party with the new character
             updatePartyMutation
@@ -60,7 +65,7 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
                 ...thisCharacter,
                 PartyId: updatedParty.id,
               };
-              editCharacter.mutateAsync(newCharacter);
+              editCharacter.mutateAsync(newCharacter).then(() => navigate(-1));
             }
           }
         } else {
@@ -70,13 +75,15 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
             playerlist: [userId],
           };
           // Call the updatePartyMutation to update the selected party with the new character
-          updatePartyMutation.mutateAsync(updatedParty).then(() => toast.success("Deleted Character"));
+          updatePartyMutation
+            .mutateAsync(updatedParty)
+            .then(() => toast.success("Deleted Character"));
           if (thisCharacter) {
             const newCharacter = {
               ...thisCharacter,
               PartyId: updatedParty.id,
             };
-            editCharacter.mutate(newCharacter);
+            editCharacter.mutateAsync(newCharacter).then(() => navigate(-1));
           }
         }
       }
