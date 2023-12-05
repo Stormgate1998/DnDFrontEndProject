@@ -59,7 +59,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/gamePage/:partyId_characterId",
+    path: "/gamePage/:partyInfo",
     element: (
       <>
         <Navbar />
@@ -133,7 +133,6 @@ export const App = () => {
         >
           {darkMode ? "Switch to Green Mode" : "Switch to Blue Mode"}
         </button>
-        <div>{darkMode.toString()}</div>
         <div>Please Log in to access the website</div>
       </div>
     </QueryClientProvider>

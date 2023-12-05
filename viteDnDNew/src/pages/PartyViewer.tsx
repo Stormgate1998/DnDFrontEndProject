@@ -1,83 +1,110 @@
 import { useParams } from "react-router-dom";
 import {
   useGetCharactersForManyPlayersQuery,
+  useGetCharactersQuery,
   useGetPartiesQuery,
 } from "../hooks/characterHooks";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
 import { useAuth } from "react-oidc-context";
+import { Party } from "../objects/Party";
 
 export const PartyViewer: React.FC = () => {
+  // Authentication hook
   const auth = useAuth();
-  const { combinedParam } = useParams();
-  const [partyId = "", usersCharacter = ""] = (combinedParam || "").split("_");
-  const protectedPartyId = String(partyId) ?? "";
+
   const party = useGetPartiesQuery();
+
+  // // User ID from authentication
+  const userId = auth.user?.profile.sub;
+
+  // Extracting parameters from the URL
+  const { partyInfo } = useParams();
+  const usersCharacter = (partyInfo || "").split("c")[1];
+
+  const [thisParty, setThisParty] = useState<Party>({
+    id: partyInfo?.split("c")[0] ?? "",
+    name: "New Party",
+    gmId: "string",
+    characterlist: [],
+    playerlist: [],
+  });
+  useEffect(() => {
+    console.log(partyInfo);
+    console.log(party.data);
+    const myParty = party.data?.find((p) => p.id === partyInfo?.split("c")[0]);
+    if (myParty) {
+      setThisParty(myParty);
+    }
+  }, [party.data, partyInfo]);
+
   const [characterList, setCharacterList] = useState<Character[]>([]);
   const [playersCharacter, setPlayersCharacter] = useState<Character>();
-  const thisParty = useMemo(() => {
-    return party.data
-      ? party.data.find((p) => p.id === protectedPartyId) ?? {
-          id: protectedPartyId,
-          name: "New Party",
-          gmId: "string",
-          characterlist: [],
-          playerlist: [],
-        }
-      : {
-          id: protectedPartyId,
-          name: "New Party",
-          gmId: "string",
-          characterlist: [],
-          playerlist: [],
-        };
-  }, [party.data, protectedPartyId]);
+  const playersCharacters = useGetCharactersQuery(userId ?? "");
+
   const charactersQuery = useGetCharactersForManyPlayersQuery(
     thisParty.playerlist
   );
 
+  // const { messages, sendMessage } = useContext(WebsocketContext);
+  // const [newMessage, setNewMessage] = useState("");
+
+  // const handleSendMessage = () => {
+  //   sendMessage(newMessage);
+  //   setNewMessage("");
+  // };
+
   useEffect(() => {
+    console.log("DATA" + thisParty.characterlist);
+    const isCharacterIdInList = (character: Character): boolean => {
+      return thisParty.characterlist.some((c) => c === character.Id);
+    };
     try {
       // Use the new hook for fetching characters for multiple players
 
       // Access the characters from the query
-      const characters = charactersQuery.data;
-
-      // Check if characters is not undefnined
-      if (characters) {
-        // Filter characters based on characterlist
-        for (const character of characters) {
-          for (const id of thisParty.characterlist) {
-            const matchingCharacters = character.filter((c) => c.Id == id);
-            if (matchingCharacters.length > 0) {
-              setCharacterList((prevCharacterList) => [
-                ...prevCharacterList,
-                ...matchingCharacters,
-              ]);
-            }
+      // Check if characters is not undefined
+      charactersQuery.data?.forEach((characterArray) => {
+        characterArray.forEach((character) => {
+          if (isCharacterIdInList(character)) {
+            setCharacterList((prevList) => [...prevList, character]);
+            console.log(
+              `Character with Id ${character.Id} found in characterList`
+            );
           }
-        }
-      }
+        });
+      });
     } catch (error) {
       console.error("Error fetching Characters:", error);
       // Handle error appropriately
     }
-  }, [charactersQuery.data, thisParty]);
+  }, [charactersQuery.data, thisParty.characterlist]);
 
-  if (usersCharacter) {
-    const PlayersCharacter = characterList.filter(
-      (c) => c.Id === usersCharacter
-    );
-    if (PlayersCharacter.length > 0) {
-      setPlayersCharacter(PlayersCharacter[0]);
+  useEffect(() => {
+    if (playersCharacters.data) {
+      setPlayersCharacter(
+        playersCharacters.data.filter((c) => c.Id === usersCharacter)[0]
+      );
     }
-  }
+  }, [playersCharacters.data, usersCharacter]);
+
+  // Set player's character based on the logged-in user
+  useEffect(() => {
+    if (usersCharacter) {
+      const PlayersCharacter = characterList.filter(
+        (c) => c.Id === usersCharacter
+      );
+      if (PlayersCharacter.length > 0) {
+        setPlayersCharacter(PlayersCharacter[0]);
+      }
+    }
+  }, [characterList, usersCharacter]);
 
   return (
     <div>
-      {usersCharacter && <div>{usersCharacter}</div>}
       <h1>{thisParty.name}</h1>
-      <p>{auth.user?.profile.sub}</p>
+      <p>{charactersQuery.data?.length}</p>
+      {/* Display list of characters */}
       {characterList &&
         characterList.map((character) => (
           <div className="border" key={character.Id}>
@@ -87,8 +114,9 @@ export const PartyViewer: React.FC = () => {
           </div>
         ))}
 
+      {/* Display player's character details if available */}
       {playersCharacter && (
-        <div>
+        <div className="border">
           <h2>{playersCharacter.Name}</h2>
           <h2>{playersCharacter.Race}</h2>
           <h2>
@@ -120,6 +148,20 @@ export const PartyViewer: React.FC = () => {
           </h2>
         </div>
       )}
+      {/* <div>
+        <h2>Chat</h2>
+        <div>
+          {messages.map((msg, index) => (
+            <p key={index}>{msg}</p>
+          ))}
+        </div>
+        <input
+          type="text"
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+        />
+        <button onClick={handleSendMessage}>Send</button>
+      </div> */}
     </div>
   );
 };

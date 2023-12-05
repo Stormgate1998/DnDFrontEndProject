@@ -70,9 +70,7 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
             playerlist: [userId],
           };
           // Call the updatePartyMutation to update the selected party with the new character
-          updatePartyMutation
-            .mutateAsync(updatedParty)
-            .then(() => toast.success("Updated Party"));
+          updatePartyMutation.mutateAsync(updatedParty).then(() => toast.success("Deleted Character"));
           if (thisCharacter) {
             const newCharacter = {
               ...thisCharacter,

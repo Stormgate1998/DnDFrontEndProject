@@ -28,11 +28,13 @@ export const useGetCharactersQuery = (playerId: string) =>
 
 export const useGetCharactersForManyPlayersQuery = (playerIDs: string[]) =>
   useQuery({
-    queryKey: ["characters"],
+    queryKey: ["characters", { playerIDs }],
     queryFn: async () => {
-      return await CharacterService.getManyCharacters(playerIDs);
+      console.log("inputs: " + playerIDs);
+      const input = await CharacterService.getManyCharacters(playerIDs);
+
+      return input;
     },
-    refetchInterval: 30000,
   });
 
 export const useAddCharacters = () => {
@@ -85,7 +87,6 @@ export const useGetPartiesQuery = () =>
     queryFn: async () => {
       return await CharacterService.getParties();
     },
-    refetchInterval: 30000,
   });
 
 export const useUpdatePartyMutation = () => {
