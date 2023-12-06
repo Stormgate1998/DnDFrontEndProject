@@ -8,7 +8,7 @@ import {
 } from "../hooks/characterHooks";
 import { Spinner } from "../components/Spinner";
 import { useAuth } from "react-oidc-context";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // Replace with the correct path
 interface PartySelectorProps {
@@ -101,6 +101,7 @@ const PartySelector: React.FC<PartySelectorProps> = ({ characterId }) => {
   }
   return (
     <div className="form-control">
+      <Toaster />
       <label>Select Party:</label>
       <select
         onChange={handleSelectChange}

@@ -8,7 +8,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 import PartySelector from "./PartyAdder";
 import { useAuth } from "react-oidc-context";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ViewerProps {}
 
@@ -45,6 +45,7 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
             >
               Delete Character
             </div>
+            <Toaster/>
             {character.PartyId.length > 0 ? (
               <Link
                 to={`/gamePage/${character.PartyId}c${character.Id}`}

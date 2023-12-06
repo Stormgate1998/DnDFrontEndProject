@@ -3,7 +3,7 @@ import "../App.css";
 import { Party } from "../objects/Party";
 import { useAddPartyQuery } from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ViewerProps {}
 
@@ -37,6 +37,7 @@ export const PartyMaker: React.FC<ViewerProps> = () => {
       <button className="btn btn-primary" onClick={handleSubmit}>
         Submit
       </button>
+      <Toaster />
     </div>
   );
 };

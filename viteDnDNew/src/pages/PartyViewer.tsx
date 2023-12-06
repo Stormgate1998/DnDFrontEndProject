@@ -104,7 +104,7 @@ export const PartyViewer: React.FC = () => {
         playersCharacters.data.filter((c) => c.Id === usersCharacter)[0]
       );
     }
-  }, [playersCharacters.data, usersCharacter]);
+  }, [auth.user?.profile.name, playersCharacters.data, usersCharacter]);
 
   // Set player's character based on the logged-in user
   useEffect(() => {
@@ -155,10 +155,14 @@ export const PartyViewer: React.FC = () => {
             placeholder="New Hitpoints"
             value={newHitpoints}
             onChange={handleHitpointsChange}
+            className="form-control"
           />
-          <button onClick={() => handleUpdateHitpoints()}>
+          <div
+            className="btn btn-primary"
+            onClick={() => handleUpdateHitpoints()}
+          >
             Update Hitpoints
-          </button>
+          </div>
           <h2>
             Strength Modifier:{" "}
             {Math.floor((playersCharacter.Strength - 10) / 2)}

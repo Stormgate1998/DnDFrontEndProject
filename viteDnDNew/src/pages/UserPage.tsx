@@ -6,7 +6,7 @@ Ability to delete either of them
 Ability to create party
 A way to store the user's preferred name in local storage, instead of the Keycloak name. ELEPHANT
  */
-
+import toast, { Toaster } from "react-hot-toast";
 import { useState } from "react";
 import GmParties from "./GmParties";
 import { PartyMaker } from "./PartyMaker";
@@ -15,6 +15,7 @@ import InputBox from "../components/InputBox";
 
 export const UserPage = () => {
   const [inputValue, setInputValue] = useState("");
+  const notify = () => toast("Here is your toast.");
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -44,6 +45,13 @@ export const UserPage = () => {
         <button className="btn btn-primary" onClick={handleSubmit}>
           Submit
         </button>
+      </div>
+      <div className="my-3">
+        Toast box
+        <div className="btn btn-primary mx-3" onClick={notify}>
+          make toast
+        </div>
+        <Toaster />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import RandomInputBox from "../components/RandomInputBox";
+import RandomInputBox from "./RandomInputBox";
 
 interface StatProps {
   attributeName: string;
@@ -21,6 +21,9 @@ const StatBlock: React.FC<StatProps> = ({
         .slice(0, 3)
         .reduce((acc, val) => acc + val, 0);
       setSum(sumOfThreeBiggest);
+      onBoxChange({
+        target: { name: attributeName, value: sumOfThreeBiggest.toString() },
+      } as ChangeEvent<HTMLInputElement>);
     }
   }, [list]);
 

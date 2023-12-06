@@ -3,7 +3,7 @@ import { useGetUserGmPartiesQuery } from "../hooks/characterHooks";
 import { useDeleteParty } from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
 import { Link } from "react-router-dom";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 const GmParties: React.FC = () => {
   const auth = useAuth();
   const userId = auth.user?.profile.sub;
@@ -29,11 +29,7 @@ const GmParties: React.FC = () => {
             <Link to={`/gamePage/${party.id}c0`} className="nav-link">
               <h2>Go to Party Viewer</h2>
             </Link>
-            <ul>
-              {party.characterlist.map((character, index) => (
-                <li key={index}>{character}</li>
-              ))}
-            </ul>
+
             <div
               className="btn btn-primary"
               onClick={() => {
@@ -44,6 +40,7 @@ const GmParties: React.FC = () => {
             >
               Delete
             </div>
+            <Toaster />
           </div>
         </div>
       ))}

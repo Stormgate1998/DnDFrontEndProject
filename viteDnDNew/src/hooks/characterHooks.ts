@@ -5,15 +5,12 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { CharacterService } from "./characterApiService";
-import toast from "react-hot-toast";
 import { Character } from "../objects/Character";
 import { Party } from "../objects/Party";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onError: (error) => {
-      toast.error("Something went wrong:" + { error });
-    },
+    
   }),
 });
 
@@ -57,8 +54,8 @@ export const useEditCharacters = () => {
       queryClient.invalidateQueries({ queryKey: ["characters"] });
     },
     onError: () => {
-      console.log("error on editing character")
-    }
+      console.log("error on editing character");
+    },
   });
 };
 
