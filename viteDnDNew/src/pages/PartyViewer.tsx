@@ -4,6 +4,7 @@ import {
   useGetCharactersForManyPlayersQuery,
   useGetCharactersQuery,
   useGetPartiesQuery,
+  queryClient,
 } from "../hooks/characterHooks";
 import { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
@@ -68,8 +69,8 @@ export const PartyViewer: React.FC = () => {
         })
         .then(() => {
           console.log(`Updating character hitpoints to ${newHitpoints}`);
-          const thispage = window.location.href;
-          window.location.href = thispage; // Redirect to the current page
+          queryClient.invalidateQueries({ queryKey: ["characters"] });
+          // Redirect to the current page
         });
     }
   };
