@@ -25,7 +25,7 @@ const StatBlock: React.FC<StatProps> = ({
         target: { name: attributeName, value: sumOfThreeBiggest.toString() },
       } as ChangeEvent<HTMLInputElement>);
     }
-  }, [list]);
+  }, [attributeName, list, onBoxChange]);
 
   return (
     <div className="border my-3 rounded-3">
