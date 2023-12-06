@@ -6,17 +6,30 @@ import {
   useGetPartiesQuery,
   queryClient,
 } from "../hooks/characterHooks";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Character } from "../objects/Character";
 import { useAuth } from "react-oidc-context";
 import { Party } from "../objects/Party";
+import { WebsocketContext } from "../WebsocketChatContext";
 
 export const PartyViewer: React.FC = () => {
   // Authentication hook
   const auth = useAuth();
-
+  const context = useContext(WebsocketContext);
   const party = useGetPartiesQuery();
 
+  const [chatInput, setChatInput] = useState<string>("");
+
+  const handleChatInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChatInput(e.target.value);
+  };
+
+  const handleSend = () => {
+    if (chatInput) {
+      context.sendMessage(thisParty.id + "_" + chatInput);
+      setChatInput("");
+    }
+  };
   // // User ID from authentication
   const userId = auth.user?.profile.sub;
 
@@ -31,6 +44,10 @@ export const PartyViewer: React.FC = () => {
     characterlist: [],
     playerlist: [],
   });
+
+  if (thisParty) {
+    localStorage.setItem("currentParty", thisParty.id);
+  }
   useEffect(() => {
     console.log(partyInfo);
     console.log(party.data);
@@ -59,9 +76,6 @@ export const PartyViewer: React.FC = () => {
         CurrentHitpoints: newValue,
       }));
 
-      // Update characterList
-
-      // setcharacterlist to same, but where character.id == playersCharacter.Id, update CurrentHitpoints
       editPlayerCharacter
         .mutateAsync({
           ...playersCharacter,
@@ -70,7 +84,7 @@ export const PartyViewer: React.FC = () => {
         .then(() => {
           console.log(`Updating character hitpoints to ${newHitpoints}`);
           queryClient.invalidateQueries({ queryKey: ["characters"] });
-          // Redirect to the current page
+          context.sendMessage(thisParty.id + "_refreshlist");
         });
     }
   };
@@ -79,13 +93,6 @@ export const PartyViewer: React.FC = () => {
     thisParty.playerlist
   );
 
-  // const { messages, sendMessage } = useContext(WebsocketContext);
-  // const [newMessage, setNewMessage] = useState("");
-
-  // const handleSendMessage = () => {
-  //   sendMessage(newMessage);
-  //   setNewMessage("");
-  // };
   const isCharacterIdInList = (character: Character): boolean => {
     return thisParty.characterlist.some((c) => c === character.Id);
   };
@@ -105,7 +112,7 @@ export const PartyViewer: React.FC = () => {
         playersCharacters.data.filter((c) => c.Id === usersCharacter)[0]
       );
     }
-  }, [auth.user?.profile.name, playersCharacters.data, usersCharacter]);
+  }, [playersCharacters.data, usersCharacter]);
 
   // Set player's character based on the logged-in user
   useEffect(() => {
@@ -130,7 +137,7 @@ export const PartyViewer: React.FC = () => {
               key={character.Id}
             >
               <div className="border rounded p-3">
-                <p key={character.Id}>{character.Name}</p>
+                <p>{character.Name}</p>
                 <p>{character.Race}</p>
                 <p>{character.CurrentHitpoints}</p>
               </div>
@@ -145,7 +152,10 @@ export const PartyViewer: React.FC = () => {
           <h2>{playersCharacter.Name}</h2>
           <h2>{playersCharacter.Race}</h2>
           <h2>
-            {playersCharacter.Class.class}, {playersCharacter.Class.level}
+            {playersCharacter.Class.class.length > 0
+              ? `${playersCharacter.Class.class},`
+              : ""}{" "}
+            {playersCharacter.Class.level}
           </h2>
           <h2>
             Hitpoints: {playersCharacter.CurrentHitpoints}/
@@ -189,20 +199,31 @@ export const PartyViewer: React.FC = () => {
           </h2>
         </div>
       )}
-      {/* <div>
-        <h2>Chat</h2>
-        <div>
-          {messages.map((msg, index) => (
-            <p key={index}>{msg}</p>
+      <div>
+        <h2>Party Chat</h2>
+        <div
+          style={{
+            width: 300,
+            height: 400,
+            border: "1px solid black",
+            padding: 10,
+            overflow: "auto",
+          }}
+        >
+          {context.messages.map((message, idx) => (
+            <div key={idx}>{message}</div>
           ))}
         </div>
         <input
           type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
+          value={chatInput}
+          onChange={handleChatInput}
+          className="form-control"
         />
-        <button onClick={handleSendMessage}>Send</button>
-      </div> */}
+        <div className="btn btn-primary" onClick={handleSend}>
+          Send
+        </div>
+      </div>
     </div>
   );
 };

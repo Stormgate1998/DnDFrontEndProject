@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { useAuth } from "react-oidc-context";
 import { CharacterMaker } from "./pages/CharacterMaker";
 import { CharacterViewer } from "./pages/CharacterViewer";
@@ -9,8 +9,8 @@ import Navbar from "./components/NavBar";
 import { UserPage } from "./pages/UserPage";
 import { PartyViewer } from "./pages/PartyViewer";
 import { useDarkMode } from "./useDarkMode";
+import { queryClient } from "./hooks/characterHooks";
 
-const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {

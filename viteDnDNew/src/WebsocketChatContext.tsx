@@ -6,6 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { queryClient } from "./hooks/characterHooks";
 
 interface WebsocketChatContextType {
   messages: string[];
@@ -21,31 +22,34 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [messages, setMessages] = useState<string[]>([]);
-  const wsRef = useRef<WebSocket | null>(null);
+  const webSocketServer = useRef<WebSocket | null>(null);
 
   useEffect(() => {
     const serverUrl = "ws://dndbarlowproject.duckdns.org:2323/chatws"; // Change this to match your WebSocket server setup
-    wsRef.current = new WebSocket(serverUrl);
+    webSocketServer.current = new WebSocket(serverUrl);
 
-    wsRef.current.onopen = () => {
-      addMessage("Connected to the relay server.");
+    webSocketServer.current.onopen = () => {};
+
+    webSocketServer.current.onmessage = (event) => {
+      const currentParty = localStorage.getItem("currentParty");
+      if (event.data.split("_")[0] === currentParty) {
+        if (event.data.split("_")[1] === "refreshlist")
+          queryClient.invalidateQueries({ queryKey: ["characters"] });
+        else {
+          addMessage(`Received: ${event.data.split("_")[1]}`);
+        }
+      }
     };
 
-    wsRef.current.onmessage = (event) => {
-      addMessage(`Received: ${event.data}`);
-    };
+    webSocketServer.current.onclose = () => {};
 
-    wsRef.current.onclose = () => {
-      addMessage("Disconnected from the server.");
-    };
-
-    wsRef.current.onerror = (error) => {
+    webSocketServer.current.onerror = (error) => {
       console.error("WebSocket Error: ", error);
     };
 
     return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
+      if (webSocketServer.current) {
+        webSocketServer.current.close();
       }
     };
   }, []);
@@ -55,9 +59,11 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   };
 
   const sendMessage = (msg: string) => {
-    if (wsRef.current?.readyState === WebSocket.OPEN) {
-      wsRef.current.send(msg);
-      addMessage(`You: ${msg}`);
+    console.log(msg);
+    console.log(webSocketServer.current?.readyState);
+    if (webSocketServer.current?.readyState === WebSocket.OPEN) {
+      webSocketServer.current.send(msg);
+      // addMessage(`You: ${msg}`);
     }
   };
 

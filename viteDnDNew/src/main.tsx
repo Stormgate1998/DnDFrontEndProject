@@ -6,6 +6,7 @@ import "./custom.scss";
 import { AuthProvider } from "react-oidc-context";
 import { App } from "./App";
 import { DarkModeProvider } from "./DarkModeContext";
+import { WebsocketProvider } from "./WebsocketChatContext";
 
 const oidcConfig = {
   authority: "https://barlowtestkeycloak.duckdns.org:2320/realms/DND",
@@ -16,10 +17,12 @@ const oidcConfig = {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <AuthProvider {...oidcConfig}>
-    <DarkModeProvider>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </DarkModeProvider>
+    <WebsocketProvider>
+      <DarkModeProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </DarkModeProvider>
+    </WebsocketProvider>
   </AuthProvider>
 );

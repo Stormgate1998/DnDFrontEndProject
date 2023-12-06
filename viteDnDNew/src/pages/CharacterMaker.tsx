@@ -107,6 +107,7 @@ export const CharacterMaker = () => {
           <div className="col-md-6">
             Class:
             <select
+              className="form-control"
               name="Class"
               value={character.Class.class}
               onChange={(e) => setClassNameChoice(e.target.value)}
