@@ -25,7 +25,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   const webSocketServer = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const serverUrl = "ws://dndbarlowproject.duckdns.org:2323/chatws"; // Change this to match your WebSocket server setup
+    const serverUrl = "wss://dndbarlowproject.duckdns.org:2323/chatws"; // Change this to match your WebSocket server setup
     webSocketServer.current = new WebSocket(serverUrl);
 
     webSocketServer.current.onopen = () => {};
