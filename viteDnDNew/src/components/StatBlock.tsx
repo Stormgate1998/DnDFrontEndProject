@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import RandomInputBox from "./RandomInputBox";
+import RandomInputBox from "./Input/RandomInputBox";
 
 interface StatProps {
   attributeName: string;

@@ -25,12 +25,12 @@ export const UserCharacterList: React.FC<ViewerProps> = () => {
       <header className="App-header"></header>
       {characterClient.data &&
         characterClient.data.map((character) => (
-          <div key={character.Id}>
+          <div key={character.Id} className="row justify-content-center">
             <Link
               to={`/character/${character.Id}`}
-              className="nav-link border rounded border-3 my-3"
+              className="nav-link col-auto border rounded border-3 my-3 p-2"
             >
-              <div className="container">
+              <div>
                 <h2>Name: {character.Name}</h2>
                 <h3>Race: {character.Race}</h3>
                 <h4>

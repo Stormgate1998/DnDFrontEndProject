@@ -11,7 +11,7 @@ import { useState } from "react";
 import GmParties from "./GmParties";
 import { PartyMaker } from "./PartyMaker";
 import { UserCharacterList } from "./UserCharacterList";
-import InputBox from "../components/InputBox";
+import InputBox from "../components/Input/InputBox";
 
 export const UserPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -35,7 +35,7 @@ export const UserPage = () => {
       <h2>Create a Party</h2>
       <PartyMaker />
 
-      <div className="container mt-4">
+      <div className="border rounded-5 my-3">
         <InputBox
           type="text"
           name="Preferred Name"

@@ -5,12 +5,12 @@ import { CharacterMaker } from "./pages/CharacterMaker";
 import { CharacterViewer } from "./pages/CharacterViewer";
 import { UserCharacterList } from "./pages/UserCharacterList";
 import GmParties from "./pages/GmParties";
-import Navbar from "./components/NavBar";
+import Navbar from "./components/Display/NavBar";
 import { UserPage } from "./pages/UserPage";
 import { PartyViewer } from "./pages/PartyViewer";
 import { useDarkMode } from "./useDarkMode";
 import { queryClient } from "./hooks/characterHooks";
-
+import { CharacterEditor } from "./pages/CharacterEditor";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +67,15 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  {
+    path: "/characterEditor/:characterId",
+    element: (
+      <>
+        <Navbar />
+        <CharacterEditor />
+      </>
+    ),
+  },
 ]);
 
 export const App = () => {
@@ -117,7 +126,6 @@ export const App = () => {
       </QueryClientProvider>
     );
   }
-  // auth.user?.profile.sub;
   return (
     <QueryClientProvider client={queryClient}>
       <div className="App">

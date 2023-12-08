@@ -3,19 +3,36 @@ import "../App.css";
 import React, { useEffect, useState } from "react";
 import { Character } from "../objects/Character";
 import InputBox from "../components/Input/InputBox";
-import { useAddCharacters } from "../hooks/characterHooks";
+import {
+  useEditCharacters,
+  useGetCharactersQuery,
+} from "../hooks/characterHooks";
 import { useAuth } from "react-oidc-context";
 import StatBlock from "../components/StatBlock";
 import InputBoxWithType from "../components/Input/InputBoxWithType";
 import toast, { Toaster } from "react-hot-toast";
-import SelectBox from "../components/Input/SelectBox";
 import PageBreak from "../components/Display/PageBreak";
 import ShortSnippet from "../components/Display/DisplayShortSnippet";
+import { useNavigate, useParams } from "react-router-dom";
 
-export const CharacterMaker = () => {
-  const addCharacter = useAddCharacters();
+export const CharacterEditor = () => {
+  const navigate = useNavigate();
+  const { characterId: characterIdParam } = useParams();
+  const editCharacter = useEditCharacters();
   const auth = useAuth();
   const userId = auth.user?.profile.sub;
+  const getCharacters = useGetCharactersQuery(userId ?? "");
+
+  useEffect(() => {
+    const myCharacter = getCharacters.data?.find(
+      (c) => c.Id === characterIdParam
+    );
+    if (myCharacter) {
+      console.log("IMPORT: ", myCharacter);
+      setCharacter(myCharacter);
+    }
+  }, [characterIdParam, getCharacters.data]);
+
   const [character, setCharacter] = useState<Character>({
     PlayerId: userId !== undefined ? userId : "",
     Strength: 0,
@@ -60,36 +77,6 @@ export const CharacterMaker = () => {
     Survival: 0,
   });
 
-  const DnDClasses: string[] = [
-    "Artificer",
-    "Barbarian",
-    "Bard",
-    "Cleric",
-    "Druid",
-    "Fighter",
-    "Monk",
-    "Paladin",
-    "Ranger",
-    "Rogue",
-    "Sorcerer",
-    "Warlock",
-    "Wizard",
-  ];
-  const raceOptions: string[] = [
-    "Dragonborn",
-    "Dwarf",
-    "Elf",
-    "Gnome",
-    "Half-Elf",
-    "Halfling",
-    "Half-Orc",
-    "Human",
-    "Tiefling",
-  ];
-
-  // Now you can use the raceOptions array wherever you need a list of strings.
-
-  const [classNameChoice, setClassNameChoice] = useState("");
   const [classLevelChoice, setClassLevelChoice] = useState(0);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -104,18 +91,13 @@ export const CharacterMaker = () => {
       ...prevCharacter,
       CurrentHitpoints: prevCharacter.MaxHitpoints,
     }));
-    await addCharacter
-      .mutateAsync(character)
-      .then(() => toast.success("Added Character"));
-    // Call the parent onSave function
+    await editCharacter.mutateAsync(character).then(() => {
+      toast.success("Successfully Edited Character");
+      navigate(`/character/${character.Id}`);
+      //Redirect to /character/charcter.Id
+    });
   };
 
-  useEffect(() => {
-    setCharacter((prevCharacter) => ({
-      ...prevCharacter,
-      Class: { ...prevCharacter.Class, class: classNameChoice },
-    }));
-  }, [classNameChoice]);
 
   useEffect(() => {
     setCharacter((prevCharacter) => ({
@@ -130,6 +112,7 @@ export const CharacterMaker = () => {
       <div className="container">
         <div className="bg-dark-subtle px-3 rounded-3">
           <h1 className="text-secondary">Character Builder</h1>
+          <p className="fst-italic">Note: Due to how integral it is to a character, we currently are not allowing the change of class or race. If you want a character with different attributes, you are free to create another</p>
           <PageBreak text="Basic Information" />
           <div className="row">
             <ShortSnippet>
@@ -140,14 +123,6 @@ export const CharacterMaker = () => {
                 onChange={handleChange}
               />
             </ShortSnippet>
-            <ShortSnippet>
-              <SelectBox
-                name="Class"
-                value={character.Class.class}
-                onChange={(e) => setClassNameChoice(e.target.value)}
-                options={DnDClasses}
-              />
-            </ShortSnippet>
 
             <ShortSnippet>
               <InputBox
@@ -155,14 +130,6 @@ export const CharacterMaker = () => {
                 type="number"
                 value={character.Class.level}
                 onChange={(e) => setClassLevelChoice(parseInt(e.target.value))}
-              />
-            </ShortSnippet>
-            <ShortSnippet>
-              <SelectBox
-                name="Race"
-                value={character.Race}
-                onChange={handleChange}
-                options={raceOptions}
               />
             </ShortSnippet>
           </div>

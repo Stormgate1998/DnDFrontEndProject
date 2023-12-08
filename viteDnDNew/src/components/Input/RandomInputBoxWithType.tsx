@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import { Character } from "../objects/Character";
+import { Character } from "../../objects/Character";
 import InputBoxWithType from "./InputBoxWithType";
 
 interface RandomRollerProps<T> {

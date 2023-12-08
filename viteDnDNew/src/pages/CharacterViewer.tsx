@@ -9,6 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import PartySelector from "./PartyAdder";
 import { useAuth } from "react-oidc-context";
 import toast, { Toaster } from "react-hot-toast";
+import ShortSnippet from "../components/Display/DisplayShortSnippet";
 
 interface ViewerProps {}
 
@@ -39,70 +40,128 @@ export const CharacterViewer: React.FC<ViewerProps> = () => {
       <header className="App-header">
         {character ? (
           <div>
+            <Link to={`/characterEditor/${character.Id}`} className="nav-link">
+              <div className="btn btn-secondary my-2">Edit Character</div>
+            </Link>
             <div
               className="btn btn-primary"
-              onClick={() => deleteCharacter.mutateAsync(character).then(() => toast.success("Deleted Character"))}
+              onClick={() =>
+                deleteCharacter
+                  .mutateAsync(character)
+                  .then(() => toast.success("Deleted Character"))
+              }
             >
               Delete Character
             </div>
-            <Toaster/>
+            <Toaster />
             {character.PartyId.length > 0 ? (
               <Link
                 to={`/gamePage/${character.PartyId}c${character.Id}`}
                 className="nav-link"
               >
-                <div className="btn btn-primary">Go To Party Viewer</div>
+                <div className="btn btn-primary m-2">Go To Party Viewer</div>
               </Link>
             ) : (
               <PartySelector characterId={character.Id} />
             )}
 
             <h2>Name: {character.Name}</h2>
-            <p>Class: {character.Class.class}</p>
-            <p>Level: {character.Class.level}</p>
-            <p>Background: {character.Background}</p>
-            <p>Race: {character.Race}</p>
-            <p>Alignment: {character.Alignment}</p>
-            <p>
-              Strength: {character.Strength} (
-              {Math.floor((character.Strength - 10) / 2)})
-            </p>
-            <p>
-              Dexterity: {character.Dexterity} (
-              {Math.floor((character.Dexterity - 10) / 2)})
-            </p>
-            <p>
-              Constitution: {character.Constitution} (
-              {Math.floor((character.Constitution - 10) / 2)})
-            </p>
-            <p>
-              Intelligence: {character.Intelligence} (
-              {Math.floor((character.Intelligence - 10) / 2)})
-            </p>
-            <p>
-              Wisdom: {character.Wisdom} (
-              {Math.floor((character.Wisdom - 10) / 2)})
-            </p>
-            <p>
-              Charisma: {character.Charisma} (
-              {Math.floor((character.Charisma - 10) / 2)})
-            </p>
+            <div className="row">
+              <ShortSnippet>
+                <p>Class: {character.Class.class}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Level: {character.Class.level}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Background: {character.Background}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Race: {character.Race}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Alignment: {character.Alignment}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>
+                  Strength: {character.Strength} (
+                  {Math.floor((character.Strength - 10) / 2)})
+                </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>
+                  Dexterity: {character.Dexterity} (
+                  {Math.floor((character.Dexterity - 10) / 2)})
+                </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>
+                  Constitution: {character.Constitution} (
+                  {Math.floor((character.Constitution - 10) / 2)})
+                </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>
+                  Intelligence: {character.Intelligence} (
+                  {Math.floor((character.Intelligence - 10) / 2)})
+                </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>
+                  Wisdom: {character.Wisdom} (
+                  {Math.floor((character.Wisdom - 10) / 2)})
+                </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>
+                  Charisma: {character.Charisma} (
+                  {Math.floor((character.Charisma - 10) / 2)})
+                </p>
+              </ShortSnippet>
 
-            <p>Max Hitpoints: {character.MaxHitpoints}</p>
-            <p>Current Hitpoints: {character.CurrentHitpoints}</p>
-            <p>Temporary Hitpoints: {character.TemporaryHitpoints}</p>
-            <p>Hit Dice: {character.HitDice}</p>
-            <p>Death Saves Successes: {character.DeathSaves.successes}</p>
-            <p>Death Saves Failures: {character.DeathSaves.failures}</p>
-            <p>Speed: {character.Speed}</p>
-            <p>Armor Class: {character.ArmorClass} </p>
-            <p>Initiative: {character.Initiative}</p>
-            <p>
-              Traits:{" "}
-              {character.Traits.length > 0
-                ? character.Traits.join(", ")
-                : "None"}
-            </p>
+              <ShortSnippet>
+                <p>Max Hitpoints: {character.MaxHitpoints}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Current Hitpoints: {character.CurrentHitpoints}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>Temporary Hitpoints: {character.TemporaryHitpoints}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Hit Dice: {character.HitDice}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                <p>Death Saves Successes: {character.DeathSaves.successes}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>Death Saves Failures: {character.DeathSaves.failures}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>Speed: {character.Speed}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>Armor Class: {character.ArmorClass} </p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>Initiative: {character.Initiative}</p>
+              </ShortSnippet>
+              <ShortSnippet>
+                {" "}
+                <p>
+                  Traits:{" "}
+                  {character.Traits.length > 0
+                    ? character.Traits.join(", ")
+                    : "None"}
+                </p>
+              </ShortSnippet>
+            </div>
           </div>
         ) : (
           <p>No character data found.</p>

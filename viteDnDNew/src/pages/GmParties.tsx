@@ -23,10 +23,10 @@ const GmParties: React.FC = () => {
   return (
     <div>
       {parties.data?.map((party) => (
-        <div className="row border" key={party.id}>
-          <div>
+        <div className="row justify-content-center" key={party.id}>
+          <div className="col-auto border rounded py-3">
             <h3>Party: {party.name}</h3>
-            <Link to={`/gamePage/${party.id}c0`} className="nav-link">
+            <Link to={`/gamePage/${party.id}c0`} className="nav-link my-2 ">
               <h2>Go to Party Viewer</h2>
             </Link>
 
