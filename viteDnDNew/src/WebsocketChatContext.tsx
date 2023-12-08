@@ -33,7 +33,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     webSocketServer.current.onmessage = (event) => {
       const currentParty = localStorage.getItem("currentParty");
       if (event.data.split("_")[0] === currentParty) {
-        if (event.data.split("_")[1] === "refreshlist")
+        if (event.data.split("_")[1] === "refreshlist99876")
           queryClient.invalidateQueries({ queryKey: ["characters"] });
         else {
           addMessage(`Received: ${event.data.split("_")[1]}`);

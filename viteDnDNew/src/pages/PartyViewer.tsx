@@ -84,7 +84,7 @@ export const PartyViewer: React.FC = () => {
         .then(() => {
           console.log(`Updating character hitpoints to ${newHitpoints}`);
           queryClient.invalidateQueries({ queryKey: ["characters"] });
-          context.sendMessage(thisParty.id + "_refreshlist");
+          context.sendMessage(thisParty.id + "_refreshlist99876");
         });
     }
   };
