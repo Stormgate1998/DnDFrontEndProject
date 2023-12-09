@@ -44,10 +44,12 @@ export const PartyViewer: React.FC = () => {
     characterlist: [],
     playerlist: [],
   });
-
-  if (thisParty) {
-    localStorage.setItem("currentParty", thisParty.id);
-  }
+useEffect(() => {
+if (thisParty) {
+  localStorage.setItem("currentParty", thisParty.id);
+}
+},[thisParty])
+  
   useEffect(() => {
     console.log(partyInfo);
     console.log(party.data);
@@ -104,7 +106,7 @@ export const PartyViewer: React.FC = () => {
       {characterList && (
         <div className="row row-cols-1 row-cols-md-2 g-4">
           {characterList.map((character) => (
-            <PlayerDisplay character={character} />
+            <PlayerDisplay key={character.Id} character={character} />
           ))}
         </div>
       )}

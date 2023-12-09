@@ -25,14 +25,16 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   const webSocketServer = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const serverUrl = "wss://dndbarlowproject.duckdns.org:2323/chatws"; // Change this to match your WebSocket server setup
+    const serverUrl = "wss://dndbarlowproject.duckdns.org:2323/chatws";
     webSocketServer.current = new WebSocket(serverUrl);
 
-    webSocketServer.current.onopen = () => {};
+    webSocketServer.current.onopen = () => {
+      console.log("Connection is open");
+    };
 
     webSocketServer.current.onmessage = (event) => {
       const currentParty = localStorage.getItem("currentParty");
-      if (event.data.split("_")[0] === currentParty) {
+      if (currentParty && event.data.split("_")[0] === currentParty) {
         if (event.data.split("_")[1] === "refreshlist99876")
           queryClient.invalidateQueries({ queryKey: ["characters"] });
         else {
@@ -41,7 +43,9 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
       }
     };
 
-    webSocketServer.current.onclose = () => {};
+    webSocketServer.current.onclose = () => {
+      console.log("Closing Connection")
+    };
 
     webSocketServer.current.onerror = (error) => {
       console.error("WebSocket Error: ", error);
