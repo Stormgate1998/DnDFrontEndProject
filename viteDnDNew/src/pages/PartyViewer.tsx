@@ -44,12 +44,12 @@ export const PartyViewer: React.FC = () => {
     characterlist: [],
     playerlist: [],
   });
-useEffect(() => {
-if (thisParty) {
-  localStorage.setItem("currentParty", thisParty.id);
-}
-},[thisParty])
-  
+  useEffect(() => {
+    if (thisParty) {
+      localStorage.setItem("currentParty", thisParty.id);
+    }
+  }, [thisParty]);
+
   useEffect(() => {
     console.log(partyInfo);
     console.log(party.data);
@@ -121,9 +121,7 @@ if (thisParty) {
       )}
       <div className="row justify-content-center">
         <h2>Party Chat</h2>
-        <div
-          className="col-auto border p-3 w-25 h-25"
-        >
+        <div className="col-auto border rounded-2 p-3 w-75 h-100">
           {context.messages.map((message, idx) => (
             <div key={idx}>{message}</div>
           ))}
