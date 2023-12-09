@@ -122,14 +122,7 @@ if (thisParty) {
       <div className="row justify-content-center">
         <h2>Party Chat</h2>
         <div
-          style={{
-            width: 300,
-            height: 400,
-            border: "1px solid black",
-            padding: 10,
-            overflow: "auto",
-          }}
-          className="col-auto"
+          className="col-auto border p-3 w-25 h-25"
         >
           {context.messages.map((message, idx) => (
             <div key={idx}>{message}</div>
