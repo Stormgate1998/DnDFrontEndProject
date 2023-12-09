@@ -13,6 +13,8 @@ read data
 write data
 websocket
 For all 3, go to PartyViewer.tsx
+Last I checked Websockets was not working for Unknown Reasons
+
 
 Developer type helping (typescript)
 Of course
