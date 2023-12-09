@@ -119,7 +119,7 @@ if (thisParty) {
           partyId={thisParty.id}
         />
       )}
-      <div>
+      <div className="row justify-content-center">
         <h2>Party Chat</h2>
         <div
           style={{
@@ -129,6 +129,7 @@ if (thisParty) {
             padding: 10,
             overflow: "auto",
           }}
+          className="col-auto"
         >
           {context.messages.map((message, idx) => (
             <div key={idx}>{message}</div>
@@ -138,9 +139,9 @@ if (thisParty) {
           type="text"
           value={chatInput}
           onChange={handleChatInput}
-          className="form-control"
+          className="form-control col-auto"
         />
-        <div className="btn btn-primary" onClick={handleSend}>
+        <div className="btn btn-primary col-auto" onClick={handleSend}>
           Send
         </div>
       </div>
