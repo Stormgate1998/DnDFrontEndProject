@@ -41,7 +41,7 @@ const CharacterInfoComponent: React.FC<PlayerDisplayProps> = ({
         .then(() => {
           console.log(`Updating character hitpoints to ${newHitpoints}`);
           queryClient.invalidateQueries({ queryKey: ["characters"] });
-          context.sendMessage(partyId + "t_refreshlist99876");
+          context.sendMessage(partyId + "_refreshlist99876");
         });
     }
   };

@@ -25,7 +25,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
   const webSocketServer = useRef<WebSocket | null>(null);
 
   useEffect(() => {
-    const serverUrl = "wss://dndbarlowproject.duckdns.org:2323/chatws";
+    const serverUrl = "ws://dndbarlowproject.duckdns.org:2323/chatws";
     webSocketServer.current = new WebSocket(serverUrl);
 
     webSocketServer.current.onopen = () => {
@@ -44,7 +44,7 @@ export const WebsocketProvider: React.FC<{ children: ReactNode }> = ({
     };
 
     webSocketServer.current.onclose = () => {
-      console.log("Closing Connection")
+      console.log("Closing Connection");
     };
 
     webSocketServer.current.onerror = (error) => {
